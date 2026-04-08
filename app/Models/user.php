@@ -6,18 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-// TAMBAHKAN INI
 use Spatie\Permission\Traits\HasRoles;
-use Filament\Panel;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles; // TAMBAHKAN HasRoles
+    use HasFactory, Notifiable, HasRoles;
 
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -31,19 +30,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    // TAMBAHKAN INI
-    public function canAccessPanel(Panel $panel): bool
-    {
-        if ($panel->getId() === 'admin') {
-            return $this->hasRole('admin');
-        }
-
-        if ($panel->getId() === 'user') {
-            return $this->hasRole('user');
-        }
-
-        return false;
     }
 }

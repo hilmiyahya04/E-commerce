@@ -17,10 +17,20 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
+        $user = User::firstOrCreate([
             'email' => 'test@example.com',
+        ], [
+            'name' => 'Test User',
             'password' => bcrypt('password'),
         ]);
+
+        // Create roles if not exist
+        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'admin']);
+        $userRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
+
+        // Assign role to user if not already assigned
+        if (!$user->hasRole('admin')) {
+            $user->assignRole('admin');
+        }
     }
 }
