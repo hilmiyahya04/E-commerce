@@ -9,6 +9,7 @@ use App\Filament\Resources\Productdetails\Schemas\ProductdetailsForm;
 use App\Filament\Resources\Productdetails\Tables\ProductdetailsTable;
 use App\Models\product_details;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,18 @@ class ProductdetailsResource extends Resource
 {
     protected static ?string $model = product_details::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-information-circle';
+
+    protected static string|BackedEnum |null $activeNavigationIcon = 'heroicon-o-document-text';
+
+    protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
+
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Schema $schema): Schema
     {

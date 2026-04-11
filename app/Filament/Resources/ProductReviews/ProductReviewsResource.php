@@ -10,6 +10,7 @@ use App\Filament\Resources\ProductReviews\Tables\ProductReviewsTable;
 use App\Models\product_reviews;
 use Illuminate\Support\Facades\Auth;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,11 +20,22 @@ class ProductReviewsResource extends Resource
 {
     protected static ?string $model = product_reviews::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-star';
+
+    protected static string|BackedEnum |null $activeNavigationIcon = 'heroicon-o-document-text';
+
+    protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
+
+    protected static ?int $navigationSort = 6;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Schema $schema): Schema
     {
-        
+
         return ProductReviewsForm::configure($schema);
     }
 

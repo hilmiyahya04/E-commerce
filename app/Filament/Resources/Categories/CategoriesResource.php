@@ -9,6 +9,7 @@ use App\Filament\Resources\Categories\Schemas\CategoriesForm;
 use App\Filament\Resources\Categories\Tables\CategoriesTable;
 use App\Models\Categories;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,15 @@ class CategoriesResource extends Resource
     protected static ?string $model = Categories::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
+
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -9,6 +9,7 @@ use App\Filament\Resources\Orders\Schemas\OrdersForm;
 use App\Filament\Resources\Orders\Tables\OrdersTable;
 use App\Models\Orders;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,18 @@ class OrdersResource extends Resource
 {
     protected static ?string $model = Orders::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-cart';
+
+    protected static string|BackedEnum |null $activeNavigationIcon = 'heroicon-o-document-text';
+
+    protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
+
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Schema $schema): Schema
     {
