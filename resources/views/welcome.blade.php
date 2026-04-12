@@ -16,14 +16,14 @@
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
         {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo--"> --}}
-        <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">ALFARIZKI</span>
+        <span class="self-center text-xl text-heading font-bold whitespace-nowrap">Alfarizki</span>
     </a>
     <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-3 items-center">
 <a href="{{ route('cart.index') }}" class="relative">
     <img src="{{ asset('assets/cart_large.png') }}" alt="Cart" class="w-6 h-6">
 </a>
           <a href="/admin/login" target="_blank"
-        class="px-4 py-1.5 bg-orange-500 border border-orange-600 text-white text-sm rounded hover:bg-orange-600">
+        class="px-4 py-1.5 bg-blue-600 text-white rounded">
         Login
       </a>
         <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-sticky" aria-expanded="false">
@@ -32,15 +32,12 @@
         </button>
     </div>
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-      <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-default rounded-base bg-neutral-secondary-soft md:space-x-4 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary">
+      <ul class="flex flex-col p-4 md:p-0 mt-4 font-bold border border-default rounded-base bg-neutral-secondary-soft md:space-x-4 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary">
         <li>
           <a href="#" class="block py-2 px-1 text-black bg-brand rounded-sm md:bg-transparent md:text-fg-brand md:p-0" aria-current="page">Home</a>
         </li>
         <li>
-          <a href="#" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">About</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Services</a>
+          <a href="#" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Recommendations</a>
         </li>
         <li>
           <a href="#" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
@@ -117,51 +114,51 @@
         <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
             REKOMENDASI PRODUK
         </h2>
-        <a href="#" class="text-sm sm:text-base text-gray-600 hover:text-gray-900">VIEW ALL PARTNERS &rarr;</a>
     </div>
 
     <!-- Grid Produk -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8">
         <!-- Card Produk -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
             <img src="https://via.placeholder.com/150" alt="Jordan" class="mx-auto mt-4 w-24 h-24 object-contain">
-            <div class="bg-orange-400 text-white py-2 font-semibold">Jordan</div>
+            <div class="bg-black text-white py-2 font-semibold">Jordan</div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
             <img src="https://via.placeholder.com/150" alt="Filla" class="mx-auto mt-4 w-24 h-24 object-contain">
-            <div class="bg-orange-400 text-white py-2 font-semibold">Filla</div>
+            <div class="bg-black text-white py-2 font-semibold">Filla</div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
             <img src="https://via.placeholder.com/150" alt="Adidas" class="mx-auto mt-4 w-24 h-24 object-contain">
-            <div class="bg-orange-400 text-white py-2 font-semibold">Adidas</div>
+            <div class="bg-black text-white py-2 font-semibold">Adidas</div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
             <img src="https://via.placeholder.com/150" alt="Supreme" class="mx-auto mt-4 w-24 h-24 object-contain">
-            <div class="bg-orange-400 text-white py-2 font-semibold">Supreme</div>
+            <div class="bg-black text-white py-2 font-semibold">Supreme</div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
             <img src="https://via.placeholder.com/150" alt="Converse" class="mx-auto mt-4 w-24 h-24 object-contain">
-            <div class="bg-orange-400 text-white py-2 font-semibold">Converse</div>
+            <div class="bg-black text-white py-2 font-semibold">Converse</div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
             <img src="https://via.placeholder.com/150" alt="Nike" class="mx-auto mt-4 w-24 h-24 object-contain">
-            <div class="bg-orange-400 text-white py-2 font-semibold">Nike</div>
+            <div class="bg-black text-white py-2 font-semibold">Nike</div>
         </div>
     </div>
 </div>
 </section>
-  <div class="p-8 md:p-12 lg:px-16 lg:py-24">
+
+  <div class=" bg-[#0D2031] p-8 md:p-12 lg:px-16 lg:py-24">
     <div class="mx-auto max-w-lg text-center">
-      <h2 class="text-2xl font-bold text-gray-900 md:text-3xl">
+      <h2 class="text-2xl font-bold text-white md:text-3xl">
         All About
       </h2>
 
-      <p class="hidden text-gray-500 sm:mt-4 sm:block">
+      <p class="hidden text-white sm:mt-4 sm:block">
         Beli sepatu impianmu di Alfarizki! Temukan koleksi sepatu terbaru
         dengan harga terbaik.Daftar sekarang untuk penawaran eksklusif dan
         diskon menarik!
@@ -176,7 +173,7 @@
           <input type="Product" placeholder="Product" class="w-full rounded-md border-gray-200 bg-white p-3 text-gray-700 shadow-xs transition focus:border-white focus:ring-2 focus:ring-yellow-400 focus:outline-hidden">
         </div>
 
-        <button type="submit" class="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-rose-600 px-5 py-3 text-white transition focus:ring-2 focus:ring-yellow-400 focus:outline-hidden sm:mt-0 sm:w-auto">
+        <button type="submit" class="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-white transition focus:ring-2 focus:ring-yellow-400 focus:outline-hidden sm:mt-0 sm:w-auto">
           <span class="text-sm font-medium"> Search</span>
 
           <svg class="size-5 shadow-sm rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -208,7 +205,7 @@
             <div class="p-4 flex flex-col flex-1">
 
                 <!-- Judul (dibatasi biar rapi) -->
-                <h3 class="font-semibold text-gray-900 group-hover:text-blue-600 transition line-clamp-2">
+                <h3 class="font-bold text-black transition line-clamp-2">
                     {{ $product->productName }}
                 </h3>
 
@@ -249,19 +246,19 @@
 <!-- END PRODUCT GRID -->
 
 <footer class="bg-neutral-primary-soft">
-    <div class="bg-white mx-auto w-full p-4 py-6 lg:py-8">
+    <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
               <a href="https://flowbite .com/" class="flex items-center">
-                  <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 me-3" alt="FlowBite Logo" />
-                  <span class="text-heading self-center text-2xl font-semibold whitespace-nowrap">Flowbite</span>
+                  {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 me-3" alt="FlowBite Logo" /> --}}
+                  <span class="text-heading text-white self-center text-2xl font-semibold whitespace-nowrap">Flowbite</span>
               </a>
           </div>
-          <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+          <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3 text-white font-bold">
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-heading uppercase">Resources</h2>
+                  <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Resources</h2>
                   <ul class="text-body font-medium">
-                      <li class="mb-4">
+                      <li class="mb-4 text-white font-bold">
                           <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
                       </li>
                       <li>
@@ -270,9 +267,9 @@
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-heading uppercase">Follow us</h2>
+                  <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Follow us</h2>
                   <ul class="text-body font-medium">
-                      <li class="mb-4">
+                      <li class="mb-4 text-white font-bold">
                           <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
                       </li>
                       <li>
@@ -281,10 +278,10 @@
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-heading uppercase">Legal</h2>
+                  <h2 class="mb-6 text-sm font-bold text-white text-heading uppercase">Legal</h2>
                   <ul class="text-body font-medium">
-                      <li class="mb-4">
-                          <a href="#" class="hover:underline">Privacy Policy</a>
+                      <li class="mb-4 text-white font-bold">
+                          <a href="# " class="hover:underline">Privacy Policy</a>
                       </li>
                       <li>
                           <a href="#" class="hover:underline">Terms &amp; Conditions</a>
@@ -295,7 +292,7 @@
       </div>
       <hr class="my-6 border-default sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-body sm:text-center">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+          <span class="text-sm text-white font-bold sm:text-center">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
           </span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
             <a href="#" class="text-body hover:text-heading">

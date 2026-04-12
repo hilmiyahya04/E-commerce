@@ -23,6 +23,13 @@ class OrdersTable
                 TextColumn::make('paymentMethod')
                     ->searchable(),
                 TextColumn::make('orderStatus')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'paid' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
                     ->searchable(),
                 TextColumn::make('id_pemesanan')
                     ->searchable(),

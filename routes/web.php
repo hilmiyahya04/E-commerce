@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
+use App\Http\Controllers\OrdersController;
 
 Route::get('/', function () {
     $products = Product::all();
@@ -44,4 +45,9 @@ Route::post('/cart/add/{id}', function (Request $request, $id) {
 
 Route::get('/cart', function () {
     return view('cart');
-})->name('cart.index'); 
+})->name('cart.index');
+
+Route::redirect('/admin', '/admin/orders');
+
+
+Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
