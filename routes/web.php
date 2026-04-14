@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     $products = Product::all();
@@ -14,7 +15,7 @@ Route::get('/', function () {
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 Route::get('/product/{id}', function ($id) {
-    $product = \App\Models\Product::findOrFail($id);
+    $product = Product::findOrFail($id);
     return view('product_detail', compact('product'));
 })->name('product.detail');
 
@@ -48,6 +49,8 @@ Route::get('/cart', function () {
 })->name('cart.index');
 
 Route::redirect('/admin', '/admin/orders');
+
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
 
 Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');

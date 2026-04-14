@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use Filament\Actions\Action as ActionsAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
+use Filament\Notifications\Notification;
 
 class OrdersTable
 {
@@ -47,6 +50,32 @@ class OrdersTable
             ])
             ->recordActions([
                 EditAction::make(),
+                ActionsAction::make('confirm')
+                    ->label('Konfirmasi')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update([
+                            'orderStatus' => 'paid',
+                        ]);
+
+                        Notification::make()
+                            ->title('Pesanan berhasil dikonfirmasi')
+                            ->success()
+                            ->send();
+                    })
+                    ->visible(fn($record) => $record->orderStatus === 'pending'),
+
+                ActionsAction::make('cancel')
+                    ->label('Batalkan')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn($record) => $record->update([
+                        'orderStatus' => 'cancelled',
+                    ]))
+                    ->visible(fn($record) => $record->orderStatus === 'pending'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id(); // Primary Key
             $table->string('categoryName', 100);
             $table->string('categoryDescription', 255)->nullable();
-
             $table->timestamps(); // created_at & updated_at
         });
     }

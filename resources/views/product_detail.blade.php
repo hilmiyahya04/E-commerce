@@ -15,7 +15,7 @@
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
         {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo--"> --}}
-        <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">ALFARIZKI</span>
+        <span class="self-center text-xl text-heading font-bold whitespace-nowrap">Alfarizki</span>
     </a>
     <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-3 items-center">
 <a href="{{ route('cart.index') }}" class="relative">
@@ -48,7 +48,7 @@
 <!-- END OF NAVBAR -->
 
 
-    <section class="pt-24 py-8 min-h-screen bg-gray-100 mt-5">
+    <section class="pt-24 py-8 bg-gray-100 mt-5">
   <div class="px-4 mx-auto 2xl:px-0">
 
     <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">

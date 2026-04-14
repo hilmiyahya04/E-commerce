@@ -15,7 +15,7 @@
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
         {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo--"> --}}
-        <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">ALFARIZKI</span>
+        <span class="self-center text-xl text-heading font-bold whitespace-nowrap">Alfarizki</span>
     </a>
     <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-3 items-center">
 <a href="{{ route('cart.index') }}" class="relative">
@@ -87,11 +87,24 @@
               </div>
 
               <!-- SUBTOTAL -->
-              <div class="text-end">
-                <p class="font-bold text-gray-900">
-                  Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}
-                </p>
-              </div>
+              <div class="text-end space-y-2">
+
+  <p class="font-bold text-gray-900">
+    Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}
+  </p>
+
+  <!-- 🔥 Tombol hapus -->
+  <form action="{{ route('cart.remove', $id) }}" method="POST">
+    @csrf
+    @method('DELETE')
+
+    <button type="submit"
+      class="text-red-600 text-sm hover:underline">
+      Hapus
+    </button>
+  </form>
+
+</div>
 
             </div>
 

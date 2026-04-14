@@ -52,8 +52,10 @@
 <section class="bg-[#0D2031] py-8 antialiased md:py-16 mt-16">
     <div class="mx-auto grid max-w-screen-xl px-4 pb-8 md:grid-cols-12 lg:gap-12 lg:pb-16 xl:gap-0">
       <div class="content-center justify-self-start md:col-span-7 md:text-start">
-        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight dark:text-white md:max-w-2xl md:text-5xl xl:text-6xl">Limited Time Offer!<br />Up to 50% OFF!</h1>
-        <p class="mb-4 max-w-2xl text-gray-500 dark:text-gray-400 md:mb-12 md:text-lg mb-3 lg:mb-5 lg:text-xl">Don't Wait - Limited Stock at Unbeatable Prices!</p>
+        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight dark:text-white md:max-w-2xl md:text-5xl xl:text-6xl">New Sports Collection<br />Up to 50% OFF!</h1>
+        <p class="mb-4 max-w-2xl text-gray-500 dark:text-gray-400 md:mb-12 md:text-lg mb-3 lg:mb-5 lg:text-xl">Engineered for speed, designed for the street.
+Experience the fusion of high-performance
+technology and elite luxury aesthetics.</p>
         <a href="#" class="inline-block rounded-lg bg-primary-700 px-6 py-3.5 text-center font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Shop Now</a>
       </div>
       <div class="hidden md:col-span-5 md:mt-0 md:flex">
@@ -204,30 +206,88 @@
 <!-- START REKOMENDASI PRODUCT -->
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
     <!-- Header -->
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
-            Rekomendasi Produk
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+        Rekomendasi Produk
         </h2>
+    <p class="text-gray-500 mb-6 py-2">
+        Tentukan pilihanmu dengan rekomendasi produk terbaik dari kami
+    </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
+    <a href="#" class="group block max-w-sm p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition duration-300">
+
+    <h5 class="mb-2 text-xl font-bold text-gray-800">
+        Nike
+    </h5>
+
+    <!-- Deskripsi -->
+    <p class="text-gray-600 mb-4">
+        High-quality sneakers for everyday wear. Experience comfort and style with Nike's latest collection. Perfect for sports and casual outings.
+    </p>
+
+    <!-- Button -->
+    <div class="mt-auto">
+        <span class="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 transition">
+            Lihat Produk →
+        </span>
     </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    <a href="#" class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-        <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Noteworthy technology acquisitions 2021</h5>
-        <p class="text-body">Here are the biggest technology acquisitions of 2025 so far, in reverse chronological order.</p>
     </a>
 
-    <a href="#" class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-        <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Noteworthy technology acquisitions 2021</h5>
-        <p class="text-body">Here are the biggest technology acquisitions of 2025 so far, in reverse chronological order.</p>
+        <a href="#" class="group block max-w-sm p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition duration-300">
+
+    <h5 class="mb-2 text-xl font-bold text-gray-800">
+        Nike
+    </h5>
+
+    <!-- Deskripsi -->
+    <p class="text-gray-600 mb-4">
+        High-quality sneakers for everyday wear. Experience comfort and style with Nike's latest collection. Perfect for sports and casual outings.
+    </p>
+
+    <!-- Button -->
+    <div class="mt-auto">
+        <span class="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 transition">
+            Lihat Produk →
+        </span>
+    </div>
     </a>
 
-    <a href="#" class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-        <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Noteworthy technology acquisitions 2021</h5>
-        <p class="text-body">Here are the biggest technology acquisitions of 2025 so far, in reverse chronological order.</p>
+        <a href="#" class="group block max-w-sm p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition duration-300">
+
+    <h5 class="mb-2 text-xl font-bold text-gray-800">
+        Nike
+    </h5>
+
+    <!-- Deskripsi -->
+    <p class="text-gray-600 mb-4">
+        High-quality sneakers for everyday wear. Experience comfort and style with Nike's latest collection. Perfect for sports and casual outings.
+    </p>
+
+    <!-- Button -->
+    <div class="mt-auto">
+        <span class="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 transition">
+            Lihat Produk →
+        </span>
+    </div>
     </a>
 
-    <a href="#" class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-        <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Noteworthy technology acquisitions 2021</h5>
-        <p class="text-body">Here are the biggest technology acquisitions of 2025 so far, in reverse chronological order.</p>
+        <a href="#" class="group block max-w-sm p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition duration-300">
+
+    <h5 class="mb-2 text-xl font-bold text-gray-800">
+        Nike
+    </h5>
+
+    <!-- Deskripsi -->
+    <p class="text-gray-600 mb-4">
+        High-quality sneakers for everyday wear. Experience comfort and style with Nike's latest collection. Perfect for sports and casual outings.
+    </p>
+
+    <!-- Button -->
+    <div class="mt-auto">
+        <span class="inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 transition">
+            Lihat Produk →
+        </span>
+    </div>
     </a>
 </div>
 </div>
@@ -263,7 +323,7 @@
       </form>
     </div>
   </div>
-<!-- END REKOMDASI PRODUCT -->
+<!-- END REKOMENDASI PRODUCT -->
 
 <!-- START PRODUCT GRID -->
 <div class="max-w-6xl mx-auto px-6 mt-12">
@@ -305,13 +365,13 @@
                     </p>
 
                     <div class="mt-auto pt-4 flex gap-2" onclick="event.stopPropagation();">
-                        <button class="flex-1 bg-green-500 text-white text-sm py-2 rounded-lg hover:bg-green-600">
+                        <button class="flex-1 bg-[#0D2031] text-white text-sm py-2 rounded-lg hover:bg-gray-600">
                             Pesan
                         </button>
 
                         <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex-1">
                             @csrf
-                            <button type="submit" class="w-full bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700">
+                            <button type="submit" class="w-full bg-green-600 text-white text-sm py-2 rounded-lg hover:bg-green-700">
                                 + Keranjang
                             </button>
                         </form>

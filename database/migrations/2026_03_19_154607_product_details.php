@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->id(); // Primary Key
-
             $table->unsignedBigInteger('orderId')->nullable();   // FK ke orders
             $table->unsignedBigInteger('productId'); // FK ke products
             $table->integer('quantity'); // jumlah produk
