@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
 </head>
-<body class="bg-gray-100">
+<body>
 
 <!-- START NAVBAR -->
 <nav class="bg-white fixed w-full z-50 top-0 shadow transition-all duration-300 ">
@@ -48,7 +48,7 @@
 <!-- END OF NAVBAR -->
 
 
-    <section class="pt-24 py-8 bg-gray-100 mt-5">
+    <section class="pt-24 py-8 bg-[#F7F9FF] mt-5">
   <div class="px-4 mx-auto 2xl:px-0">
 
     <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">

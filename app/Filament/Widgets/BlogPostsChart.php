@@ -3,9 +3,11 @@
 namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\Auth;
 
 class BlogPostsChart extends ChartWidget
 {
+
     protected ?string $heading = 'Blog Posts Chart';
 
     protected function getData(): array
@@ -24,5 +26,10 @@ class BlogPostsChart extends ChartWidget
     protected function getType(): string
     {
         return 'bar';
+    }
+
+    public static function canView(): bool
+    {
+        return Auth::check() && Auth::user()->role === 'super_admin';
     }
 }

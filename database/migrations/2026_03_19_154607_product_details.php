@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->foreign('productId')
                 ->references('id')
-                ->on('products')
+                ->on('product')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('order_details');
     }
 };

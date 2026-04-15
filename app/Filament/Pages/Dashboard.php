@@ -9,7 +9,6 @@ use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 class Dashboard extends BaseDashboard
 {
 
-    use HasPageShield;
     protected static ?string $title = 'Dashboard';
 
     protected function getHeaderWidgets(): array

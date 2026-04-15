@@ -46,7 +46,7 @@
   </div>
 </nav>
 <!-- END OF NAVBAR -->
-<section class="bg-gray-100 py-8 antialiased md:py-16 mt-5">
+<section class="bg-[#F7F9FF] py-8 antialiased md:py-16 mt-5">
   <div class="max-w-screen-xl mx-auto px-4 2xl:px-0">
 
     <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl">

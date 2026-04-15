@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartController;
 
+
 Route::get('/', function () {
     $products = Product::all();
     return view('welcome', compact('products'));
@@ -47,8 +48,6 @@ Route::post('/cart/add/{id}', function (Request $request, $id) {
 Route::get('/cart', function () {
     return view('cart');
 })->name('cart.index');
-
-Route::redirect('/admin', '/admin/orders');
 
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 

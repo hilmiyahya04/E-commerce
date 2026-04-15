@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Create roles if not exist
-        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'admin']);
+        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'super_admin']);
         $userRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
 
         // Assign role to user if not already assigned
-        if (!$user->hasRole('admin')) {
-            $user->assignRole('admin');
+        if (!$user->hasRole('super_admin')) {
+            $user->assignRole('super_admin');
         }
     }
 }

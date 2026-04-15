@@ -9,7 +9,7 @@
     <title>Alfarizki</title>
 
 </head>
-<body class="bg-[#F7F9FF] ">
+<body class="bg-[#F7F9FF]">
 
 <!-- START NAVBAR -->
 <nav class="bg-white fixed w-full z-50 top-0 shadow transition-all duration-300 ">
