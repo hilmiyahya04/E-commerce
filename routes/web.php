@@ -51,5 +51,7 @@ Route::get('/cart', function () {
 
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
-
 Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
+
+Route::get('/search', [ProductController::class, 'search'])
+    ->name('product.search');

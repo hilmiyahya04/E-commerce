@@ -18,12 +18,18 @@
         {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo--"> --}}
         <span class="self-center text-xl text-heading font-bold whitespace-nowrap">Alfarizki</span>
     </a>
-    <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-3 items-center">
-<a href="{{ route('cart.index') }}" class="relative">
-    <img src="{{ asset('assets/cart_large.png') }}" alt="Cart" class="w-6 h-6">
+    <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-4 items-center">
+<a href="{{ route('cart.index') }}" class="relative inline-block">
+    <img src="{{ asset('assets/cart-large.png') }}" class="w-6 h-6">
+
+    @if($cartCount > 0)
+        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            {{ $cartCount }}
+        </span>
+    @endif
 </a>
           <a href="/admin/login" target="_blank"
-        class="px-4 py-1.5 bg-blue-600 text-white rounded">
+        class="px-4 py-1.5 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition">
         Login
       </a>
         <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-sticky" aria-expanded="false">
@@ -291,38 +297,50 @@ technology and elite luxury aesthetics.</p>
     </a>
 </div>
 </div>
+<!-- END REKOMENDASI PRODUCT -->
 
-  <div class=" bg-[#0D2031] p-8 md:p-12 lg:px-16 lg:py-24 mt-24">
+  <div class="bg-[#0D2031] p-8 md:p-12 lg:px-16 lg:py-24 mt-24">
     <div class="mx-auto max-w-lg text-center">
-      <h2 class="text-2xl font-bold text-white md:text-3xl">
-        All About
-      </h2>
+        <h2 class="text-2xl font-bold text-white md:text-3xl">
+            All About
+        </h2>
 
-      <p class="hidden text-white sm:mt-4 sm:block">
-        Beli sepatu impianmu di Alfarizki! Temukan koleksi sepatu terbaru
-        dengan harga terbaik.Daftar sekarang untuk penawaran eksklusif dan
-        diskon menarik!
-      </p>
+        <p class="hidden text-white sm:mt-4 sm:block">
+            Beli sepatu impianmu di Alfarizki! Temukan koleksi sepatu terbaru
+            dengan harga terbaik. Daftar sekarang untuk penawaran eksklusif dan
+            diskon menarik!
+        </p>
     </div>
 
     <div class="mx-auto mt-8 max-w-xl">
-      <form action="#" class="sm:flex sm:gap-4">
-        <div class="sm:flex-1">
-          <label for="email" class="sr-only">Product</label>
+        <form action="{{ route('product.search') }}" method="GET" class="sm:flex sm:gap-4">
 
-          <input type="Product" placeholder="Product" class="w-full rounded-md border-gray-200 bg-white p-3 text-gray-700 shadow-xs transition focus:border-white focus:ring-2 focus:ring-yellow-400 focus:outline-hidden">
-        </div>
+            <div class="sm:flex-1">
+                <label class="sr-only">Product</label>
 
-        <button type="submit" class="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-white transition focus:ring-2 focus:ring-yellow-400 focus:outline-hidden sm:mt-0 sm:w-auto">
-          <span class="text-sm font-medium"> Search</span>
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Cari produk..."
+                    class="w-full rounded-md border-gray-200 bg-white p-3 text-gray-700 shadow-xs transition focus:border-white focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+                >
+            </div>
 
-          <svg class="size-5 shadow-sm rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </button>
-      </form>
+            <button
+                type="submit"
+                class="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-white transition hover:bg-blue-700 focus:ring-2 focus:ring-yellow-400 sm:mt-0 sm:w-auto"
+            >
+                <span class="text-sm font-medium">Search</span>
+
+                <svg class="size-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </button>
+
+        </form>
     </div>
-  </div>
+</div>
 <!-- END REKOMENDASI PRODUCT -->
 
 <!-- START PRODUCT GRID -->
@@ -371,8 +389,8 @@ technology and elite luxury aesthetics.</p>
 
                         <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex-1">
                             @csrf
-                            <button type="submit" class="w-full bg-green-600 text-white text-sm py-2 rounded-lg hover:bg-green-700">
-                                + Keranjang
+                            <button type="submit" class="w-full bg-green-600 text-white text-sm py-2 rounded-lg hover:bg-green-700 flex justify-center items-center">
+                                <img src="{{ asset('assets/cart-shopping.png') }}" class=" w-5 h-5">
                             </button>
                         </form>
                     </div>
@@ -390,7 +408,7 @@ technology and elite luxury aesthetics.</p>
 
 <footer class="bg-neutral-primary-soft">
     <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
-        <div class="md:flex md:justify-start gap-12">
+        <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
               <a href="https://flowbite .com/" class="flex items-center">
                   {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 me-3" alt="FlowBite Logo" /> --}}
@@ -447,6 +465,68 @@ technology and elite luxury aesthetics.</p>
       </div>
     </div>
 </footer>
+
+
+<footer class="bg-neutral-primary-soft">
+    <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
+        <div class="md:flex md:justify-between">
+          <div class="mb-6 md:mb-0">
+              <a href="https://flowbite .com/" class="flex items-center">
+                  {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 me-3" alt="FlowBite Logo" /> --}}
+                  <span class="text-heading text-white self-center text-2xl font-semibold whitespace-nowrap">Alfarizki</span>
+              </a>
+              <p class="mt-2 text-white font-medium">kami adalah toko sepatu online terpercaya</p>
+          </div>
+          <div class="grid grid-cols-2 gap-5 sm:gap-9 sm:grid-cols-3 text-white text-left">
+              <div>
+                    <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Resources</h2>
+                  <ul class="text-body font-medium">
+                                  <li class="mb-4 text-white ">
+                          <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                      </li>
+                       <li>
+                         <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                     </li>
+                  </ul>
+              </div>
+              <div>
+                  <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Follow us</h2>
+                  <ul class="text-body font-medium">
+                      <li class="mb-4 text-white">
+                          <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
+                      </li>
+                      <li>
+                          <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                      </li>
+                  </ul>
+              </div>
+              <div>
+                  <h2 class="mb-6 text-sm font-bold text-white text-heading uppercase">Legal</h2>
+                  <ul class="text-body font-medium">
+                      <li class="mb-4 text-white">
+                          <a href="# " class="hover:underline">Privacy Policy</a>
+                      </li>
+                      <li>
+                          <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <hr class="my-6 border-default sm:mx-auto lg:my-8" />
+      <div class="sm:flex sm:items-center sm:justify-between">
+          <span class="text-sm text-white font-bold sm:text-center">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+          </span>
+          <div class="flex mt-4 sm:justify-center sm:mt-0">
+            <a href="#" class="text-body hover:text-heading">
+                <svg class="bg-white w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/></svg>
+                <span class="sr-only">Facebook page</span>
+            </a>
+          </div>
+      </div>
+    </div>
+</footer>
+
 <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
 </body>
 </html>

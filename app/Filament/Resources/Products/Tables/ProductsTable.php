@@ -28,9 +28,9 @@ class ProductsTable
                     ->disk('public'),
                 TextColumn::make('productAvailability')
                     ->searchable(),
-                TextColumn::make('  postingDate')
-                    ->date()
-                    ->sortable(),
+                TextColumn::make('postingDate')
+                    ->label('postingDate')
+                    ->dateTime(),
                 TextColumn::make('categoryId')
                     ->numeric()
                     ->sortable(),

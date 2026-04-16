@@ -17,12 +17,18 @@
         {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo--"> --}}
         <span class="self-center text-xl text-heading font-bold whitespace-nowrap">Alfarizki</span>
     </a>
-    <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-3 items-center">
-<a href="{{ route('cart.index') }}" class="relative">
-    <img src="{{ asset('assets/cart_large.png') }}" alt="Cart" class="w-6 h-6">
+    <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-4 items-center">
+<a href="{{ route('cart.index') }}" class="relative inline-block">
+    <img src="{{ asset('assets/cart-large.png') }}" class="w-6 h-6">
+
+    @if($cartCount > 0)
+        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            {{ $cartCount }}
+        </span>
+    @endif
 </a>
           <a href="/admin/login" target="_blank"
-        class="px-4 py-1.5 bg-blue-600 text-white rounded">
+        class="px-4 py-1.5 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition">
         Login
       </a>
         <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-sticky" aria-expanded="false">
@@ -92,27 +98,25 @@
     <input type="hidden" name="product_id" value="{{ $product->id }}">
 
     <button type="submit"
-        class="flex items-center justify-center gap-2 py-2.5 px-5 text-sm font-medium text-white
-               bg-blue-600 border border-gray-200 rounded-lg hover:bg-blue-700">
+        class="flex bg-[#0D2031] items-center justify-center gap-2 py-2.5 px-5 text-sm font-medium text-white border border-gray-200 rounded-lg hover:bg-gray-600">
         <span>Pesan</span>
     </button>
 </form>
 
           <!-- ADD TO CART -->
 <a href="{{ route('cart.index') }}"
-   class="relative inline-flex items-center gap-3
+   class="bg-green-600 relative inline-flex items-center gap-3
           bg-primary-700 hover:bg-primary-800
-          text-gray-900 font-medium rounded-lg text-sm
+          text-white font-medium rounded-lg text-sm
           px-5 py-2.5 transition duration-200
-          focus:ring-4 focus:ring-primary-300" >
+          focus:ring-4 focus:ring-primary-300  hover:bg-green-700" >
 
-    <img src="{{ asset('assets/cart_large.png') }}" class="w-5 h-5">
-    <span>Cart</span>
+    <img src="{{ asset('assets/cart-shopping.png') }}" class="w-5 h-5">
 </a>
 
         </div>
 
-        <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+        <hr class="w-3/4 my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
         <!-- DESCRIPTION -->
         <p class="text-gray-500 dark:text-gray-400">
@@ -126,7 +130,7 @@
 
 <footer class="bg-neutral-primary-soft">
     <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
-        <div class="md:flex md:justify-start gap-12">
+        <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
               <a href="https://flowbite .com/" class="flex items-center">
                   {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 me-3" alt="FlowBite Logo" /> --}}

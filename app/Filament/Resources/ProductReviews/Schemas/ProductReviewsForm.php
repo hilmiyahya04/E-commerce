@@ -6,6 +6,8 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+
 
 
 class ProductReviewsForm
@@ -15,13 +17,19 @@ class ProductReviewsForm
         return $schema
             ->components([
                 Hidden::make('userId')
-                    ->default(Auth::id()),
+                    ->default(fn() => Auth::id()),
 
                 TextInput::make('productCode')
                     ->required(),
 
-                TextInput::make('rating')
-                    ->numeric()
+                Select::make('rating')
+                    ->options([
+                        5 => '⭐⭐⭐⭐⭐',
+                        4 => '⭐⭐⭐⭐',
+                        3 => '⭐⭐⭐',
+                        2 => '⭐⭐',
+                        1 => '⭐',
+                    ])
                     ->required(),
             ]);
     }

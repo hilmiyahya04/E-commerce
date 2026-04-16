@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductReviewsResource extends Resource
 {
@@ -27,6 +28,16 @@ class ProductReviewsResource extends Resource
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 
     protected static ?int $navigationSort = 6;
+
+    public static function getEloquentQuery(): Builder
+    {
+        if (Auth::user()->role === 'user') {
+            return parent::getEloquentQuery()
+                ->where('userId', Auth::id());
+        }
+
+        return parent::getEloquentQuery();
+    }
 
     public static function getNavigationBadge(): ?string
     {

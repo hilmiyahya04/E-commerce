@@ -12,4 +12,13 @@ class productcontroller extends Controller
         $products = Product::all();
         return view('products.index', compact('products'));
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $products = \App\Models\Product::where('productName', 'like', "%{$search}%")->get();
+
+        return view('product', compact('products'));
+    }
 }
