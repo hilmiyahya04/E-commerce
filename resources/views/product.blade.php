@@ -7,6 +7,7 @@
     <title>Seach</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="bg-[#F7F9FF]">
 
@@ -54,29 +55,46 @@
 <!-- END OF NAVBAR -->
 
 
-<div class="max-w-6xl mx-auto px-6 py-10 mt-12">
+<div class="max-w-3xl mx-auto px-6 py-10 mt-12">
 
         <!-- 🧾 Judul -->
-    <h1 class="text-2xl font-bold mb-6 text-center">Daftar Produk</h1>
+    <div class="mx-auto max-w-lg text-center">
+                <h2 class="text-2xl font-bold text-gray-900 md:text-3xl">
+            All About
+        </h2>
 
-    <!-- 🔍 Search Bar -->
-    <form action="{{ route('product.search') }}" method="GET" class="mb-10">
-        <div class="flex max-w-xl mx-auto shadow rounded-lg overflow-hidden">
+        <p class="hidden text-gray-900 sm:mt-4 sm:block">
+            Temukan berbagai produk sepatu berkualitas dengan harga terjangkau di toko online kami. Kami menyediakan berbagai pilihan model dan ukuran untuk memenuhi kebutuhan gaya Anda. Belanja sekarang dan nikmati pengalaman berbelanja yang mudah dan menyenangkan!
+        </p>
+    </div>
+
+    <div class="max-w-xl mx-auto">
+        <form action="{{ route('product.search') }}" method="GET"
+          class="flex flex-col sm:flex-row gap-3 mt-12">
+
+        <div class="flex-1">
+            <label class="sr-only">Product</label>
+
             <input
                 type="text"
                 name="search"
                 value="{{ request('search') }}"
                 placeholder="Cari produk..."
-                class="w-full px-4 py-3 focus:outline-none"
+                class="w-full rounded-lg bg-white p-3 text-gray-700 shadow focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
-            <button
-                type="submit"
-                class="bg-green-600 text-white px-6 hover:bg-green-700"
-            >
-                Cari
-            </button>
         </div>
+
+        <button
+            type="submit"
+            class="flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700 transition sm:w-auto"
+        >
+            <span class="text-sm font-medium">Cari</span>
+        </button>
+
     </form>
+    </div>
+
+</div>
 
     <!-- ❌ Jika kosong -->
     @if($products->isEmpty())
@@ -84,49 +102,46 @@
     @endif
 
     <!-- 🛍 Grid Produk -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-6 max-w-xl mx-auto">
 
-        @foreach($products as $product)
-        <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+    @foreach($products as $product)
+    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden min-h-[400px] flex flex-col">
 
-            <!-- 📷 Gambar -->
-            @if($product->productImage1)
-                <img
-                    src="{{ asset('storage/'.$product->productImage1) }}"
-                    class="w-full h-48 object-cover"
-                >
-            @endif
+        @if($product->productImage1)
+            <img
+                src="{{ asset('storage/'.$product->productImage1) }}"
+                class="w-40 h-48 object-cover mx-auto"
+            >
+        @endif
 
-            <!-- 📄 Konten -->
-            <div class="p-4">
+        <div class="p-4 flex flex-col flex-grow">
 
-                <h3 class="text-lg font-semibold mb-2">
-                    {{ $product->productName }}
-                </h3>
+        <div class="mt-auto">
+             <h3 class="text-lg font-semibold mb-2">
+        {{ $product->productName }}
+    </h3>
 
-                <p class="text-green-600 font-bold mb-4">
-                    Rp {{ number_format($product->productPrice, 0, ',', '.') }}
-                </p>
+    <p class="text-gray-900 font-bold mb-4">
+        Rp {{ number_format($product->productPrice, 0, ',', '.') }}
+    </p>
 
-                <!-- 🛒 Button -->
-                <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                    @csrf
-                    <button
-                        class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-                    >
-                        + Keranjang
-                    </button>
-                </form>
-
-            </div>
+    <!-- tombol otomatis ke bawah -->
+    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+        @csrf
+        <button class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600">
+            Pesan
+        </button>
+    </form>
         </div>
-        @endforeach
-
+</div>
     </div>
+    @endforeach
+</div>
 </div>
 
 
-<footer class="bg-neutral-primary-soft">
+
+<footer id="Contact" class="bg-neutral-primary-soft">
     <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
@@ -178,8 +193,7 @@
           </span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
             <a href="#" class="text-body hover:text-heading">
-                <svg class="bg-white w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/></svg>
-                <span class="sr-only">Facebook page</span>
+                <i class="fa-brands fa-instagram text-white text-xl"></i>
             </a>
           </div>
       </div>

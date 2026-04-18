@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandName('Alfarizki')
             ->login()
             ->registration()
             ->colors([
@@ -53,6 +54,7 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->spa()
             ->authMiddleware([
                 Authenticate::class,
             ])

@@ -7,6 +7,7 @@
     <title>Product Detail</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -128,7 +129,7 @@
   </div>
 </section>
 
-<footer class="bg-neutral-primary-soft">
+<footer id="Contact" class="bg-neutral-primary-soft">
     <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
@@ -180,8 +181,7 @@
           </span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
             <a href="#" class="text-body hover:text-heading">
-                <svg class="bg-white w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/></svg>
-                <span class="sr-only">Facebook page</span>
+                <i class="fa-brands fa-instagram text-white text-xl"></i>
             </a>
           </div>
       </div>

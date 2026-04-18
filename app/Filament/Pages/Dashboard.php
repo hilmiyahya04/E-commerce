@@ -11,6 +11,8 @@ class Dashboard extends BaseDashboard
 
     protected static ?string $title = 'Dashboard';
 
+    protected static ?string $navigationLabel = 'Dashboard';
+
     protected function getHeaderWidgets(): array
     {
         return [
