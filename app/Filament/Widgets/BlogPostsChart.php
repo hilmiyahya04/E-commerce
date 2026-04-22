@@ -5,9 +5,11 @@ namespace App\Filament\Widgets;
 use App\Models\orders;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\Auth;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class BlogPostsChart extends ChartWidget
 {
+    use HasWidgetShield;
 
     protected ?string $heading = 'Penjualan perbulan    ';
 
@@ -33,8 +35,4 @@ class BlogPostsChart extends ChartWidget
         return 'bar';
     }
 
-    public static function canView(): bool
-    {
-        return Auth::check() && Auth::user()->role === 'super_admin';
-    }
 }

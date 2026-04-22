@@ -275,6 +275,7 @@
 </div>
 <!-- END REKOMENDASI PRODUCT -->
 
+<!-- START SEARCH -->
   <div class="bg-[#0D2031] p-8 md:p-12 lg:px-16 lg:py-24 mt-24">
     <div class="mx-auto max-w-lg text-center">
         <h2 class="text-2xl font-bold text-white md:text-3xl">
@@ -313,11 +314,10 @@
         </form>
     </div>
 </div>
-<!-- END REKOMENDASI PRODUCT -->
+<!-- END SEARCH -->
 
 <!-- START PRODUCT GRID -->
 <div id="Product" class="pt-20 -mt-20 min-h-[80vh] pb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-
     <!-- TEXT DI ATAS -->
     <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
         Produk Terbaru
@@ -378,6 +378,8 @@
 </div>
 <!-- END PRODUCT GRID -->
 
+
+<!-- START FOOTER -->
 <footer id="Contact" class="bg-neutral-primary-soft">
     <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
@@ -436,6 +438,7 @@
       </div>
     </div>
 </footer>
+<!-- END FOOTER -->
 
 <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
 </body>

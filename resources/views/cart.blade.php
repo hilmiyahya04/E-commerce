@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<!-- START NAVBAR -->
 <nav class="bg-white fixed w-full z-50 top-0 shadow transition-all duration-300 ">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -41,10 +43,13 @@
           <a href="#" class="block py-2 px-1 text-black bg-brand rounded-sm md:bg-transparent md:text-fg-brand md:p-0" aria-current="page">Home</a>
         </li>
         <li>
-          <a href="#" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Recommendations</a>
+          <a href="#Recommendations" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Recommendations</a>
         </li>
         <li>
-          <a href="#" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
+          <a href="#Product" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Product</a>
+        </li>
+        <li>
+          <a href="#Contact" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
         </li>
       </ul>
     </div>
@@ -67,53 +72,53 @@
         @if(session('cart') && count(session('cart')) > 0)
 
           @foreach(session('cart') as $id => $item)
-          <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
+          <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6 hover:shadow-md transition">
 
-            <div class="flex flex-col md:flex-row md:items-center gap-6">
+    <div class="flex flex-col md:flex-row md:items-center gap-6">
 
-              <!-- IMAGE -->
-              <img
-                src="{{ asset('storage/'.$item['image']) }}"
-                class="w-20 h-20 object-cover rounded"
-              >
+        <!-- IMAGE -->
+        <img
+            src="{{ $item['image'] ? asset('storage/' . $item['image']) : asset('images/default.png') }}"
+            class="w-24 h-24 object-cover rounded-lg border"
+        >
 
-              <!-- INFO -->
-              <div class="flex-1 space-y-2">
-                <h3 class="font-semibold text-gray-900">
-                  {{ $item['name'] }}
-                </h3>
+        <!-- INFO -->
+        <div class="flex-1 space-y-1">
+            <h3 class="font-semibold text-gray-900">
+                {{ $item['name'] }}
+            </h3>
 
-                <p class="text-gray-500 text-sm">
-                  Rp {{ number_format($item['price'], 0, ',', '.') }}
-                </p>
+            <p class="text-gray-500 text-sm">
+                Rp {{ number_format($item['price'], 0, ',', '.') }}
+            </p>
 
-                <p class="text-sm">
-                  Qty: <span class="font-medium">{{ $item['quantity'] }}</span>
-                </p>
-              </div>
+            <!-- Qty -->
+            <p class="text-sm text-gray-600">
+                Qty: <span class="font-medium">{{ $item['quantity'] ?? 1 }}</span>
+            </p>
+        </div>
 
-              <!-- SUBTOTAL -->
-              <div class="text-end space-y-2">
+        <!-- SUBTOTAL -->
+        <div class="text-end space-y-2">
+            <p class="font-bold text-gray-900 text-lg">
+                Rp {{ number_format($item['price'] * ($item['quantity'] ?? 1), 0, ',', '.') }}
+            </p>
 
-  <p class="font-bold text-gray-900">
-    Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}
-  </p>
+            <!-- Tombol hapus -->
+            <form action="{{ route('cart.remove', $id) }}" method="POST">
+                @csrf
+                @method('DELETE')
 
-  <!-- 🔥 Tombol hapus -->
-  <form action="{{ route('cart.remove', $id) }}" method="POST">
-    @csrf
-    @method('DELETE')
+                <button type="submit"
+                    class="text-red-600 text-sm hover:underline">
+                    Hapus
+                </button>
+            </form>
+        </div>
 
-    <button type="submit"
-      class="text-red-600 text-sm hover:underline">
-      Hapus
-    </button>
-  </form>
+    </div>
 
 </div>
-            </div>
-
-          </div>
           @endforeach
 
         @else
@@ -131,23 +136,29 @@
 
           <p class="text-xl font-semibold text-gray-900">Order summary</p>
 
-          @php
-            $total = 0;
-            if(session('cart')){
-              foreach(session('cart') as $item){
-                $total += $item['price'] * $item['quantity'];
-              }
-            }
-          @endphp
+         @php
+    $total = 0;
+    if(session('cart')){
+        foreach(session('cart') as $item){
+            $qty = $item['quantity'] ?? 1;
+            $price = $item['price'] ?? 0;
+
+            $total += $price * $qty;
+        }
+    }
+@endphp
 
           <div class="flex justify-between font-bold text-lg">
             <span>Total</span>
             <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
           </div>
 
-          <button class="w-full bg-[#0D2031] text-white py-2.5 rounded-lg hover:bg-gray-600 transition">
-            Pesan
-          </button>
+          <form action="{{ route('orders.store') }}" method="POST">
+    @csrf
+    <button class="w-full bg-[#0D2031] text-white py-2.5 rounded-lg hover:bg-gray-600 transition">
+        Checkout
+    </button>
+</form>
 
         </div>
 

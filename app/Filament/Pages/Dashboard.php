@@ -16,8 +16,8 @@ class Dashboard extends BaseDashboard
     protected function getHeaderWidgets(): array
     {
         return [
-            \App\Filament\Widgets\DashboardOverview::class,
-            \App\Filament\Widgets\BlogPostsChart::class,
+            // \App\Filament\Widgets\DashboardOverview::class,
+            // \App\Filament\Widgets\BlogPostsChart::class,
         ];
     }
 }

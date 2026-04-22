@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class product extends Model
 {
@@ -21,4 +22,11 @@ class product extends Model
         'postingDate',
         'categoryId'
     ];
+
+    public function index()
+    {
+        $products = Product::all();
+
+        return view('cart', compact('products'));
+    }
 }

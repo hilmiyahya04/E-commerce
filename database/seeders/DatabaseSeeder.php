@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+
+use function Symfony\Component\String\s;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,20 +20,21 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $user = User::firstOrCreate([
+        $this->call((ShieldSeeder::class));
+
+        Role::firstOrCreate(['name' => 'panel_user', 'guard_name' => 'web']);
+        $user = User::factory()->create([
             'email' => 'test@example.com',
-        ], [
             'name' => 'Test User',
             'password' => bcrypt('password'),
         ]);
 
-        // Create roles if not exist
-        $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'super_admin']);
-        $userRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'user']);
+        $user->assignRole('super_admin');
+        $this->call([
+        ]);
 
-        // Assign role to user if not already assigned
-        if (!$user->hasRole('super_admin')) {
-            $user->assignRole('super_admin');
+
         }
+
+
     }
-}

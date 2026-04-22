@@ -36,6 +36,10 @@ class OrdersTable
                     ->searchable(),
                 TextColumn::make('id_pemesanan')
                     ->searchable(),
+                TextColumn::make('total_price')
+                    ->label('Total Harga')
+                    ->money('IDR')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -15,5 +15,10 @@ class orders extends Model
         'paymentMethod',
         'orderStatus',
         'id_pemesanan',
+        'total_price',
     ];
+    public function items()
+    {
+        return $this->hasMany(order_items::class, 'order_id');
+    }
 }

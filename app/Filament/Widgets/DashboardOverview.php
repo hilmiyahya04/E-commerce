@@ -8,9 +8,12 @@ use App\Models\Product;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Facades\Auth;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class DashboardOverview extends StatsOverviewWidget
 {
+
+    use HasWidgetShield;
     protected function getStats(): array
     {
         $countProducts = Product::count();
@@ -21,10 +24,5 @@ class DashboardOverview extends StatsOverviewWidget
             Stat::make('Kategori Brand', $countCategories . ' Kategori'),
             Stat::make('Account User', $countUser . ' User'),
         ];
-    }
-
-    public static function canView(): bool
-    {
-        return Auth::check() && Auth::user()->role === 'super_admin';
     }
 }
