@@ -2,14 +2,14 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use App\Models\User;
 use Filament\Actions\Action as ActionsAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Tables\Actions\Action;
-use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersTable
 {
@@ -52,36 +52,46 @@ class OrdersTable
             ->filters([
                 //
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
+
                 ActionsAction::make('confirm')
                     ->label('Konfirmasi')
-                    ->icon('heroicon-o-check-circle')
+                    ->icon('heroicon-o-check')
                     ->color('success')
                     ->requiresConfirmation()
-                    ->action(function ($record) {
-                        $record->update([
-                            'orderStatus' => 'paid',
-                        ]);
-
-                        Notification::make()
-                            ->title('Pesanan berhasil dikonfirmasi')
-                            ->success()
-                            ->send();
-                    })
-                    ->visible(fn($record) => $record->orderStatus === 'pending'),
+                    ->action(fn($record) => $record->update(['orderStatus' => 'paid']))
+                    ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->hasRole('super_admin');
+                    }),
 
                 ActionsAction::make('cancel')
                     ->label('Batalkan')
-                    ->icon('heroicon-o-x-circle')
+                    ->icon('heroicon-o-x-mark')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(fn($record) => $record->update([
-                        'orderStatus' => 'cancelled',
-                    ]))
-                    ->visible(fn($record) => $record->orderStatus === 'pending'),
+                    ->action(fn($record) => $record->update(['orderStatus' => 'cancelled']))
+                    ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->hasRole('super_admin');
+                    }),
+
+                ActionsAction::make('ship')
+                    ->label('Kirim')
+                    ->icon('heroicon-o-truck')
+                    ->color('primary')
+                    ->requiresConfirmation()
+                    ->action(fn($record) => $record->update(['orderStatus' => 'shipped']))
+                    ->visible(function () {
+                        /** @var User|null $user */
+                        $user = Auth::user();
+                        return $user && $user->hasRole('super_admin');
+                    }),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

@@ -7,6 +7,7 @@ use App\Models\orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\product_order_track_histories;
 
 class OrdersController extends Controller
 {
@@ -46,6 +47,13 @@ class OrdersController extends Controller
                 'subtotal' => ($item['price'] ?? 0) * ($item['quantity'] ?? 1),
             ]);
         }
+
+        product_order_track_histories::create([
+            'order_id' => $order->id,
+            'status' => 'pending',
+            'keterangan' => 'Pesanan dibuat',
+            'tanggal' => now(),
+        ]);
 
         // 4. kosongkan cart
         session()->forget('cart');

@@ -10,6 +10,8 @@ use App\Filament\Resources\Orders\Pages\ListOrders;
 use App\Filament\Resources\Orders\Schemas\OrdersForm;
 use App\Filament\Resources\Orders\Tables\OrdersTable;
 use App\Models\Orders;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
@@ -32,6 +34,22 @@ class OrdersResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user) {
+            // Hanya admin yang bisa lihat semua order
+            if (!$user->hasRole('super_admin')) {
+                $query->where('userId', $user->id);
+            }
+        }
+
+        return $query;
     }
 
     public static function form(Schema $schema): Schema
