@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductReviews\Schemas;
 
+use App\Models\product;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\TextInput;
@@ -16,12 +17,20 @@ class ProductReviewsForm
     {
         return $schema
             ->components([
+                // user otomatis login
                 Hidden::make('userId')
                     ->default(fn() => Auth::id()),
 
-                TextInput::make('productCode')
+                // pilih produk (lebih aman daripada input text)
+                Select::make('productCode')
+                    ->label('Produk')
+                    ->options(
+                        product::pluck('productCode', 'productCode')
+                    )
+                    ->searchable()
                     ->required(),
 
+                // rating
                 Select::make('rating')
                     ->options([
                         5 => '⭐⭐⭐⭐⭐',

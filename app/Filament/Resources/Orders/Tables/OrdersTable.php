@@ -10,6 +10,8 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use App\Models\product_order_track_histories;
+use App\Filament\Resources\Orders\OrdersResource;
 
 class OrdersTable
 {
@@ -84,7 +86,14 @@ class OrdersTable
                     ->icon('heroicon-o-truck')
                     ->color('primary')
                     ->requiresConfirmation()
-                    ->action(fn($record) => $record->update(['orderStatus' => 'shipped']))
+                    ->action(function ($record) {
+                        $record->update(['orderStatus' => 'shipped']);
+                        product_order_track_histories::create([
+                            'orderId' => $record->id,
+                            'status'  => 'shipped',
+                            'remarks' => 'Pesanan dikirim oleh admin',
+                        ]);
+                    })
                     ->visible(function () {
                         /** @var User|null $user */
                         $user = Auth::user();

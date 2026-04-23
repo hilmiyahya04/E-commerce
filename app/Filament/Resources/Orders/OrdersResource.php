@@ -10,6 +10,7 @@ use App\Filament\Resources\Orders\Pages\ListOrders;
 use App\Filament\Resources\Orders\Schemas\OrdersForm;
 use App\Filament\Resources\Orders\Tables\OrdersTable;
 use App\Models\Orders;
+use App\Models\product_order_track_histories;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use BackedEnum;
@@ -75,5 +76,14 @@ class OrdersResource extends Resource
             'create' => CreateOrders::route('/create'),
             'edit' => EditOrders::route('/{record}/edit'),
         ];
+    }
+
+    private static function addTracking($order, $status, $remarks = null)
+    {
+        product_order_track_histories::create([
+            'orderId' => $order->id,
+            'status'  => $status,
+            'remarks' => $remarks,
+        ]);
     }
 }

@@ -38,4 +38,8 @@ class User extends Authenticatable
         // Check if the user has the 'super_admin' role
         return true;
     }
+    public function reviews()
+    {
+        return $this->hasMany(product_reviews::class, 'userId');
+    }
 }

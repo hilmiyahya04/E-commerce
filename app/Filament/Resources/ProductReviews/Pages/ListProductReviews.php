@@ -13,7 +13,10 @@ class ListProductReviews extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Beri Review')
+                ->icon('heroicon-o-star')
+                ->color('warning'),
         ];
     }
 }

@@ -16,6 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\CreateAction;
 
 class ProductReviewsResource extends Resource
 {
@@ -28,6 +29,7 @@ class ProductReviewsResource extends Resource
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 
     protected static ?int $navigationSort = 6;
+
 
     public static function getEloquentQuery(): Builder
     {
@@ -64,7 +66,9 @@ class ProductReviewsResource extends Resource
 
     public static function getPages(): array
     {
+
         return [
+
             'index' => ListProductReviews::route('/'),
             'create' => CreateProductReviews::route('/create'),
             'edit' => EditProductReviews::route('/{record}/edit'),
