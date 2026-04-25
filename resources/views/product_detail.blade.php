@@ -101,10 +101,22 @@
 
     <input type="hidden" name="product_id" value="{{ $product->id }}">
 
+    @auth
     <button type="submit"
         class="flex bg-[#0D2031] items-center justify-center gap-2 py-2.5 px-5 text-sm font-medium text-white border border-gray-200 rounded-lg hover:bg-gray-600">
         <span>Pesan</span>
     </button>
+    @endauth
+
+    @guest
+    <button type="button"
+        class="flex bg-[#0D2031] items-center justify-center gap-2 py-2.5 px-5 text-sm font-medium text-white border border-gray-200 rounded-lg hover:bg-gray-600"
+        onclick="alert('Silakan login terlebih dahulu untuk memesan produk.')">
+        <span>Pesan</span>
+    </button>
+
+    @endguest
+
 </form>
 
           <!-- ADD TO CART -->

@@ -131,9 +131,17 @@
     <!-- tombol otomatis ke bawah -->
     <form action="{{ route('cart.add', $product->id) }}" method="POST">
         @csrf
-        <button class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600">
+        @auth
+         <button class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600">
             Pesan
         </button>
+        @endauth
+
+        @guest
+         <button type="button" class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600" onclick="alert('Silakan login terlebih dahulu untuk memesan produk.')">
+            Pesan
+        </button>
+        @endguest
     </form>
         </div>
 </div>
@@ -145,7 +153,7 @@
 
 
 <footer id="Contact" class="bg-neutral-primary-soft">
-    <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8">
+    <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8 mt-12">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
               <a href="https://flowbite .com/" class="flex items-center">

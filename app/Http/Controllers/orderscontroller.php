@@ -49,7 +49,7 @@ class OrdersController extends Controller
         }
 
         product_order_track_histories::create([
-            'order_id' => $order->id,
+            'orderId' => $order->id,
             'status' => 'pending',
             'keterangan' => 'Pesanan dibuat',
             'tanggal' => now(),

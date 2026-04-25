@@ -155,11 +155,23 @@
 
           <form action="{{ route('orders.store') }}" method="POST">
     @csrf
-    <button class="w-full bg-[#0D2031] text-white py-2.5 rounded-lg hover:bg-gray-600 transition">
-        Checkout
-    </button>
-</form>
 
+    @auth
+        <button type="submit"
+            class="w-full bg-[#0D2031] text-white py-2.5 rounded-lg hover:bg-gray-600 transition">
+            Checkout
+        </button>
+    @endauth
+
+    @guest
+        <button type="button"
+            onclick="alert('Silakan login terlebih dahulu untuk checkout')"
+            class="w-full bg-[#0D2031] text-white py-2.5 rounded-lg hover:bg-gray-600 transition">
+            Checkout
+        </button>
+    @endguest
+
+</form>
         </div>
 
       </div>
