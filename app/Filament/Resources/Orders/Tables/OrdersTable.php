@@ -57,6 +57,26 @@ class OrdersTable
             ->actions([
                 EditAction::make(),
 
+                ActionsAction::make('process')
+                    ->label('Proses')
+                    ->icon('heroicon-o-cog')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update(['orderStatus' => 'processed']);
+                    })
+                    ->visible(fn($record) => $record->orderStatus === 'pending'),
+
+                ActionsAction::make('complete')
+                    ->label('Selesai')
+                    ->icon('heroicon-o-check')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update(['orderStatus' => 'completed']);
+                    })
+                    ->visible(fn($record) => $record->orderStatus === 'pending' || $record->orderStatus === 'processed'),
+
                 ActionsAction::make('confirm')
                     ->label('Konfirmasi')
                     ->icon('heroicon-o-check')

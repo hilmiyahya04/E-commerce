@@ -390,11 +390,11 @@
               </a>
               <p class="mt-2 text-white font-medium">kami adalah toko sepatu online terpercaya</p>
           </div>
-          <div class="grid grid-cols-2 gap-5 sm:gap-9 sm:grid-cols-3 text-white text-left">
+          {{-- <div class="grid grid-cols-2 gap-5 sm:gap-9 sm:grid-cols-3 text-white text-left">
               <div>
                     <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Resources</h2>
                   <ul class="text-body font-medium">
-                                  <li class="mb-4 text-white ">
+                      <li class="mb-4 text-white ">
                           <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
                       </li>
                        <li>
@@ -424,15 +424,18 @@
                       </li>
                   </ul>
               </div>
-          </div>
+          </div> --}}
       </div>
       <hr class="my-6 border-default sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-white font-bold sm:text-center">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+          <span class="text-sm text-white font-bold sm:text-center">© 2026 <a href="https://flowbite.com/" class="hover:underline">Alfarizki™</a>. All Rights Reserved.
           </span>
-          <div class="flex mt-4 sm:justify-center sm:mt-0">
+          <div class="flex mt-4 sm:justify-center sm:mt-0 gap-3">
             <a href="#" class="text-body hover:text-heading">
                 <i class="fa-brands fa-instagram text-white text-xl"></i>
+            </a>
+            <a href="#" class="text-body hover:text-heading">
+                <i class="fa-brands fa-whatsapp text-white text-xl"></i>
             </a>
           </div>
       </div>

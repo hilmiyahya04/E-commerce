@@ -13,6 +13,36 @@ class OrdersController extends Controller
 {
     public function store(Request $request)
     {
+        if ($request->product_id) {
+            $product = \App\Models\Product::findOrFail($request->product_id);
+
+            $order = orders::create([
+                'userId' => Auth::id(),
+                'orderDate' => now(),
+                'paymentMethod' => 'COD',
+                'orderStatus' => 'pending',
+                'id_pemesanan' => 'ORD-' . strtoupper(Str::random(8)),
+                'total_price' => $product->productPrice,
+            ]);
+
+            order_items::create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'product_name' => $product->productName,
+                'price' => $product->productPrice,
+                'qty' => 1,
+                'subtotal' => $product->productPrice,
+            ]);
+
+            product_order_track_histories::create([
+                'orderId' => $order->id,
+                'status' => 'pending',
+                'keterangan' => 'Pesanan dibuat',
+                'tanggal' => now(),
+            ]);
+
+            return redirect()->back()->with('success', 'Pesanan berhasil dibuat');
+        }
 
         $cart = session('cart');
 
@@ -20,23 +50,20 @@ class OrdersController extends Controller
             return redirect()->back()->with('error', 'Cart kosong');
         }
 
-        // 1. hitung total
         $total = 0;
         foreach ($cart as $item) {
             $total += $item['price'] * ($item['quantity'] ?? 1);
         }
 
-        // 2. buat orders (header)
         $order = orders::create([
             'userId' => Auth::id(),
             'orderDate' => now(),
             'paymentMethod' => 'COD',
             'orderStatus' => 'pending',
             'id_pemesanan' => 'ORD-' . strtoupper(Str::random(8)),
-            'total_price' => $total, // kalau ada kolomnya
+            'total_price' => $total,
         ]);
 
-        // 3. masukkan ke order_items
         foreach ($cart as $productId => $item) {
             order_items::create([
                 'order_id' => $order->id,
@@ -55,7 +82,6 @@ class OrdersController extends Controller
             'tanggal' => now(),
         ]);
 
-        // 4. kosongkan cart
         session()->forget('cart');
 
         return redirect()->back()->with('success', 'Pesanan berhasil dibuat');
