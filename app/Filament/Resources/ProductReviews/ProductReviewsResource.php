@@ -71,7 +71,6 @@ class ProductReviewsResource extends Resource
 
             'index' => ListProductReviews::route('/'),
             'create' => CreateProductReviews::route('/create'),
-            'edit' => EditProductReviews::route('/{record}/edit'),
         ];
     }
 }

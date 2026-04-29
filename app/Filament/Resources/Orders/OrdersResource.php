@@ -43,10 +43,13 @@ class OrdersResource extends Resource
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
+
         if ($user) {
-            // Hanya admin yang bisa lihat semua order
+
+            // USER biasa hanya lihat order miliknya + yang sudah diproses
             if (!$user->hasRole('super_admin')) {
-                $query->where('userId', $user->id);
+                $query->where('userId', $user->id)
+                    ->whereIn('orderStatus', ['paid', 'processed', 'shipped', 'completed']);
             }
         }
 

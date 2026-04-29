@@ -6,7 +6,6 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\Select;
@@ -33,7 +32,15 @@ class ProductReviewsTable
             ])
 
             ->actions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-pencil-square')
+                    ->color('primary')
+                    ->size('sm')
+                    ->tooltip('Edit Review')
+                    ->modalHeading('Edit Review Produk')
+                    ->modalSubmitActionLabel('Simpan')
+                    ->modalWidth('lg'),
 
                 Action::make('beri_rating')
                     ->label('Beri Rating')
