@@ -3,213 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Seach</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Alfarizki Shop</title>
+    <!-- Tambahkan link Tailwind CDN jika belum ada di header -->
+    <script src="https://tailwindcss.com"></script>
 </head>
-<body class="bg-[#F7F9FF]">
 
-<!-- START NAVBAR -->
-<nav class="bg-white fixed w-full z-50 top-0 shadow transition-all duration-300 ">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo--"> --}}
-        <span class="self-center text-xl text-heading font-bold whitespace-nowrap">Alfarizki</span>
-    </a>
-    <div class="flex md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse flex gap-4 items-center">
-<a href="{{ route('cart.index') }}" class="relative inline-block">
-    <img src="{{ asset('assets/cart-large.png') }}" class="w-6 h-6">
+<body class="bg-gray-50 flex flex-col min-h-screen">
 
-    @if($cartCount > 0)
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-            {{ $cartCount }}
-        </span>
-    @endif
-</a>
-          <a href="/admin/login" target="_blank"
-        class="px-4 py-1.5 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition">
-        Login
-      </a>
-        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-sticky" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
-        </button>
-    </div>
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-      <ul class="flex flex-col p-4 md:p-0 mt-4 font-bold border border-default rounded-base bg-neutral-secondary-soft md:space-x-4 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary">
-        <li>
-          <a href="#" class="block py-2 px-1 text-black bg-brand rounded-sm md:bg-transparent md:text-fg-brand md:p-0" aria-current="page">Home</a>
-        </li>
-        <li>
-          <a href="#Recommendations" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Recommendations</a>
-        </li>
-        <li>
-          <a href="#Product" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Product</a>
-        </li>
-        <li>
-          <a href="#Contact" class="block py-2 px-1 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- END OF NAVBAR -->
+<!-- KONTEN UTAMA -->
+<section class="animate-fade-in-smooth flex-grow bg-white">
 
+    <!-- START SEARCH -->
+    <!-- Perbaikan: Mengubah bg-#FFFFFF menjadi bg-white (Utility Tailwind yang valid) -->
+    <div class="animate-fade-in-smooth bg-white p-8 md:p-12 lg:px-16 lg:py-20 mt-10">
+        <div class="mx-auto max-w-lg text-center">
+            <h1 class="animate-fade-in-smooth text-2xl font-bold text-black sm:text-3xl">
+                All About
+            </h1>
 
-<div class="max-w-3xl mx-auto px-6 py-10 mt-12">
-
-        <!-- 🧾 Judul -->
-    <div class="mx-auto max-w-lg text-center">
-                <h2 class="text-2xl font-bold text-gray-900 md:text-3xl">
-            All About
-        </h2>
-
-        <p class="hidden text-gray-900 sm:mt-4 sm:block">
-            Temukan berbagai produk sepatu berkualitas dengan harga terjangkau di toko online kami. Kami menyediakan berbagai pilihan model dan ukuran untuk memenuhi kebutuhan gaya Anda. Belanja sekarang dan nikmati pengalaman berbelanja yang mudah dan menyenangkan!
-        </p>
-    </div>
-
-    <div class="max-w-xl mx-auto">
-        <form action="{{ route('product.search') }}" method="GET"
-          class="flex flex-col sm:flex-row gap-3 mt-12">
-
-        <div class="flex-1">
-            <label class="sr-only">Product</label>
-
-            <input
-                type="text"
-                name="search"
-                value="{{ request('search') }}"
-                placeholder="Cari produk..."
-                class="w-full rounded-lg bg-white p-3 text-gray-700 shadow focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
+            <p class="animate-fade-in-smooth hidden text-black sm:mt-4 sm:block">
+                Beli sepatu impianmu di Alfarizki! Temukan koleksi sepatu terbaru
+                dengan harga terbaik. Daftar sekarang untuk penawaran eksklusif dan
+                diskon menarik!
+            </p>
         </div>
 
-        <button
-            type="submit"
-            class="flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700 transition sm:w-auto"
-        >
-            <span class="text-sm font-medium">Cari</span>
-        </button>
+        <div class="mx-auto mt-8 max-w-4xl">
+            <form action="{{ route('product.search') }}" method="GET">
+                <div class="flex items-center rounded-full bg-[#e9e9ee] p-2 shadow-sm">
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        class="w-full bg-transparent px-6 py-3 text-lg text-gray-700 border-none outline-none ring-0 focus:ring-0 focus:outline-none"
+                    />
 
-    </form>
+                    <button
+                        type="submit"
+                        class="flex h-14 w-14 items-center justify-center rounded-full bg-[#11131a] text-white transition hover:scale-105"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="m21 21-4.35-4.35m1.85-5.15a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+    <!-- END SEARCH -->
 
-</div>
-
-    <!-- ❌ Jika kosong -->
     @if($products->isEmpty())
-        <p class="text-center text-gray-500">Produk tidak ditemukan</p>
+        <div class="text-center py-12">
+            <p class="text-xl text-gray-500 font-medium">Produk tidak ditemukan 🌟</p>
+        </div>
+    @else
+        <!-- 🛍 Grid Produk -->
+        <div class="animate-fade-in-smooth grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-6 mb-12 px-4">
+            @foreach($products as $product)
+            <div class="animate-fade-in-smooth bg-white rounded-xl overflow-hidden flex flex-col justify-between">
+
+                <img 
+                    class="w-full h-[300px] object-cover rounded-[32px]"
+                    src="{{ $product->productImage1 
+                        ? asset('storage/' . $product->productImage1) 
+                        : 'https://placehold.co/600x600/F3F4F6/F3F4F6' }}"
+                    alt="{{ $product->productName }}"
+                >
+
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <div>
+                        <h3 class="text-base font-semibold mb-1 text-gray-800 line-clamp-2">
+                            {{ $product->productName }}
+                        </h3>
+
+                        <p class="text-gray-950 font-bold mb-4">
+                            Rp {{ number_format($product->productPrice, 0, ',', '.') }}
+                        </p>
+
+                        <p class="text-sm text-gray-500 mt-2 line-clamp-3">
+                            {{ $product->category->categoryDescription ?? 'Tidak ada deskripsi kategori.' }}
+                        </p>
+                    </div>
+
+                    <!-- <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-auto">
+                        @csrf
+                        @auth
+                        <button class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600 transition">
+                            <a href="{{ route('product.detail', $product->id) }}">Pesan</a>
+                        </button>
+                        @endauth
+
+                        @guest
+                        <button type="button" class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600 transition" onclick="alert('Silakan login terlebih dahulu untuk memesan produk.')">
+                            Pesan
+                        </button>
+                        @endguest
+                    </form> -->
+                </div>
+            </div>
+            @endforeach
+        </div>
+        <!-- END GRID -->
     @endif
 
-    <!-- 🛍 Grid Produk -->
-    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-6 max-w-xl mx-auto">
-
-    @foreach($products as $product)
-    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden min-h-[400px] flex flex-col">
-
-        @if($product->productImage1)
-            <img
-                src="{{ asset('storage/'.$product->productImage1) }}"
-                class="w-40 h-48 object-cover mx-auto"
-            >
-        @endif
-
-        <div class="p-4 flex flex-col flex-grow">
-
-        <div class="mt-auto">
-             <h3 class="text-lg font-semibold mb-2">
-        {{ $product->productName }}
-    </h3>
-
-    <p class="text-gray-900 font-bold mb-4">
-        Rp {{ number_format($product->productPrice, 0, ',', '.') }}
-    </p>
-
-    <!-- tombol otomatis ke bawah -->
-    <form action="{{ route('cart.add', $product->id) }}" method="POST">
-        @csrf
-        @auth
-         <button class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600">
-            Pesan
-        </button>
-        @endauth
-
-        @guest
-         <button type="button" class="w-full bg-[#0D2031] text-white py-2 rounded-lg hover:bg-gray-600" onclick="alert('Silakan login terlebih dahulu untuk memesan produk.')">
-            Pesan
-        </button>
-        @endguest
-    </form>
-        </div>
-</div>
-    </div>
-    @endforeach
-</div>
-</div>
+</section>
 
 
+@include('components.header')
 
-<footer id="Contact" class="bg-neutral-primary-soft">
-    <div class="bg-[#0D2031] mx-auto w-full p-4 py-6 lg:py-8 mt-12">
-        <div class="md:flex md:justify-between">
-          <div class="mb-6 md:mb-0">
-              <a href="https://flowbite .com/" class="flex items-center">
-                  {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7 me-3" alt="FlowBite Logo" /> --}}
-                  <span class="text-heading text-white self-center text-2xl font-semibold whitespace-nowrap">Alfarizki</span>
-              </a>
-              <p class="mt-2 text-white font-medium">kami adalah toko sepatu online terpercaya</p>
-          </div>
-          {{-- <div class="grid grid-cols-2 gap-5 sm:gap-9 sm:grid-cols-3 text-white text-left">
-              <div>
-                    <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Resources</h2>
-                  <ul class="text-body font-medium">
-                                  <li class="mb-4 text-white ">
-                          <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
-                      </li>
-                       <li>
-                         <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
-                     </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 class="mb-6 text-sm text-white font-bold text-heading uppercase">Follow us</h2>
-                  <ul class="text-body font-medium">
-                      <li class="mb-4 text-white">
-                          <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
-                      </li>
-                      <li>
-                          <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
-                      </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 class="mb-6 text-sm font-bold text-white text-heading uppercase">Legal</h2>
-                  <ul class="text-body font-medium">
-                      <li class="mb-4 text-white">
-                          <a href="# " class="hover:underline">Privacy Policy</a>
-                      </li>
-                      <li>
-                          <a href="#" class="hover:underline">Terms &amp; Conditions</a>
-                      </li>
-                  </ul>
-              </div>
-          </div> --}}
-      </div>
-      <hr class="my-6 border-default sm:mx-auto lg:my-8" />
-      <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-white font-bold sm:text-center">© 2026 <a href="https://flowbite.com/" class="hover:underline">Alfarizki™</a>. All Rights Reserved.
-          </span>
-          <div class="flex mt-4 sm:justify-center sm:mt-0">
-            <a href="#" class="text-body hover:text-heading">
-                <i class="fa-brands fa-instagram text-white text-xl"></i>
-            </a>
-          </div>
-      </div>
-    </div>
-</footer>
+@include('components.navbar')
+
+@include('components.footer')
 
 <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
 </body>

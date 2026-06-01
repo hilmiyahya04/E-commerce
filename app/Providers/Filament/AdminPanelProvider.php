@@ -21,6 +21,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Widgets\DashboardOverview;
 use App\Filament\Widgets\BlogPostsChart;
+use App\Filament\Widgets\OrderStats;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('Alfarizki')
+            ->favicon(asset('Fav-icon.jpg'))
             ->login()
             ->registration()
             ->colors([
@@ -44,7 +46,9 @@ class AdminPanelProvider extends PanelProvider
             // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 DashboardOverview::class,
+                OrderStats::class,
                 BlogPostsChart::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,

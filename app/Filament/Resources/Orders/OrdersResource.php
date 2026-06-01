@@ -30,11 +30,19 @@ class OrdersResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 
+    protected static ?string $navigationLabel =  'Pesanan';
+
+    protected static ?string $modelLabel = 'Pesanan';
+
+    protected static ?string $pluralModelLabel = 'Pesanan';
+
     protected static ?int $navigationSort = 4;
 
-    public static function getNavigationBadge(): ?string
+    protected function mutateFormDataBeforeCreate(array $data): array
     {
-        return static::getModel()::count();
+        $data['userId'] = Auth::id();
+
+        return $data;
     }
 
     public static function getEloquentQuery(): Builder

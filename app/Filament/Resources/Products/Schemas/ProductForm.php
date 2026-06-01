@@ -6,6 +6,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 
 class ProductForm
 {
@@ -29,8 +30,14 @@ class ProductForm
                     ->preserveFilenames(),
                 TextInput::make('productAvailability'),
                 DatePicker::make('postingDate'),
-                TextInput::make('categoryId')
-                    ->numeric(),
+
+                // 👈 2. GANTI TEXTINPUT SEBELUMNYA DENGAN KODE SELECT INI
+                Select::make('categoryId')
+                    ->relationship('category', 'categoryName') // Sesuaikan 'categoryName' dengan kolom nama di tabel categories kamu
+                    ->searchable()
+                    ->preload()
+                    ->nullable()
+                    ->default(null),
             ]);
     }
 }

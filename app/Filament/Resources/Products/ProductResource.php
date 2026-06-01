@@ -27,10 +27,11 @@ class ProductResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
+    protected static ?string $navigationLabel = 'Produk';
+
+    protected static ?string $modelLabel = 'Produk';
+
+    protected static ?string $pluralModelLabel = 'Produk';
 
     public static function form(Schema $schema): Schema
     {
@@ -54,7 +55,7 @@ class ProductResource extends Resource
         return [
             'index' => ListProducts::route('/'),
             'create' => CreateProduct::route('/create'),
-            'edit' => EditProduct::route('/{record}/edit'),
+            // 'edit' => EditProduct::route('/{record}/edit'),
         ];
     }
 }

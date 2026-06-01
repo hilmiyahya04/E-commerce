@@ -25,10 +25,10 @@ class UserResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'User Management';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
+    protected static ?string $modelLabel = 'User';
+
+    protected static ?string $pluralModelLabel = 'User';
+
 
     public static function form(Schema $schema): Schema
     {
@@ -52,7 +52,7 @@ class UserResource extends Resource
         return [
             'index' => ListUsers::route('/'),
             'create' => CreateUser::route('/create'),
-            'edit' => EditUser::route('/{record}/edit'),
+            // 'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 }

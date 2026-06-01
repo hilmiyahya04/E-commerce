@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class product extends Model
 {
@@ -28,5 +29,10 @@ class product extends Model
         $products = Product::all();
 
         return view('cart', compact('products'));
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(categories::class, 'categoryId', 'id');
     }
 }

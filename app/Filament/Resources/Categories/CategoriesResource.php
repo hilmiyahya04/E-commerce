@@ -25,10 +25,11 @@ class CategoriesResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
+    protected static ?string $navigationLabel =  'Kategori';
+
+    protected static ?string $modelLabel = 'Kategori';
+
+    protected static ?string $pluralModelLabel = 'Kategori';
 
     public static function form(Schema $schema): Schema
     {

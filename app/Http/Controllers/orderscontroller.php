@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\order_items;
 use App\Models\orders;
+use App\Models\product_order_track_histories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use App\Models\product_order_track_histories;
 
 class OrdersController extends Controller
 {
     public function store(Request $request)
     {
+        // PESAN LANGSUNG DARI PRODUCT DETAIL
         if ($request->product_id) {
+
             $product = \App\Models\Product::findOrFail($request->product_id);
 
             $order = orders::create([
@@ -44,15 +47,21 @@ class OrdersController extends Controller
             return redirect()->back()->with('success', 'Pesanan berhasil dibuat');
         }
 
-        $cart = session('cart');
+        // CHECKOUT DARI CART
+        $cart = CartItem::where('user_id', Auth::id())
+            ->with('product')
+            ->get();
 
-        if (!$cart) {
+        if ($cart->isEmpty()) {
             return redirect()->back()->with('error', 'Cart kosong');
         }
 
         $total = 0;
+
         foreach ($cart as $item) {
-            $total += $item['price'] * ($item['quantity'] ?? 1);
+            if ($item->product) {
+                $total += $item->product->productPrice * $item->quantity;
+            }
         }
 
         $order = orders::create([
@@ -64,14 +73,19 @@ class OrdersController extends Controller
             'total_price' => $total,
         ]);
 
-        foreach ($cart as $productId => $item) {
+        foreach ($cart as $item) {
+
+            if (!$item->product) {
+                continue;
+            }
+
             order_items::create([
                 'order_id' => $order->id,
-                'product_id' => $productId,
-                'product_name' => $item['name'],
-                'price' => $item['price'] ?? 0,
-                'qty' => $item['quantity'] ?? 1,
-                'subtotal' => ($item['price'] ?? 0) * ($item['quantity'] ?? 1),
+                'product_id' => $item->product->id,
+                'product_name' => $item->product->productName,
+                'price' => $item->product->productPrice,
+                'qty' => $item->quantity,
+                'subtotal' => $item->product->productPrice * $item->quantity,
             ]);
         }
 
@@ -82,8 +96,9 @@ class OrdersController extends Controller
             'tanggal' => now(),
         ]);
 
-        session()->forget('cart');
+        // Kosongkan cart setelah checkout
+        CartItem::where('user_id', Auth::id())->delete();
 
-        return redirect()->back()->with('success', 'Pesanan berhasil dibuat');
+        return redirect()->back()->with('success', 'Checkout berhasil');
     }
 }

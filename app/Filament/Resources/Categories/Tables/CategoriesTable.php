@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\DeleteAction;
 use Filament\Tables\Table;
 
 class CategoriesTable
@@ -15,8 +16,10 @@ class CategoriesTable
         return $table
             ->columns([
                 TextColumn::make('categoryName')
+                    ->label('Kategori Nama')
                     ->searchable(),
                 TextColumn::make('categoryDescription')
+                    ->label('Deskripsi Kategori')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -30,8 +33,23 @@ class CategoriesTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                EditAction::make(),
+            ->actions([
+                EditAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-pencil-square')
+                    ->color('primary')
+                    ->size('sm')
+                    ->tooltip('Edit Review')
+                    ->modalHeading('Edit Review Produk')
+                    ->modalSubmitActionLabel('Simpan')
+                    ->modalWidth('lg'),
+
+                DeleteAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->size('sm')
+                    ->tooltip('Delete User'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

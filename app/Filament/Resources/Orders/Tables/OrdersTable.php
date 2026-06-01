@@ -12,6 +12,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use App\Models\product_order_track_histories;
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\Orders\OrdersResource;
 
 class OrdersTable
@@ -21,14 +22,18 @@ class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('userId')
+                    ->label('ID Pengguna')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('orderDate')
+                    ->label('Tanggal Pemesanan')
                     ->date()
                     ->sortable(),
                 TextColumn::make('paymentMethod')
+                    ->label('Metode Pembayaran')
                     ->searchable(),
                 TextColumn::make('orderStatus')
+                    ->label('Status Pemesanan')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
@@ -38,6 +43,7 @@ class OrdersTable
                     })
                     ->searchable(),
                 TextColumn::make('id_pemesanan')
+                    ->label('ID Pemesanan')
                     ->searchable(),
                 TextColumn::make('total_price')
                     ->label('Total Harga')
@@ -60,8 +66,54 @@ class OrdersTable
                     ->label('')
                     ->icon('heroicon-o-pencil-square'),
 
+
+                DeleteAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->size('sm')
+                    ->tooltip('Delete User'),
+
                 ActionGroup::make([
-                    ActionsAction::make('ship')
+                    ActionsAction::make('Pending')
+                        ->label('Pending')
+                        ->icon('heroicon-o-clock')
+                        ->color('primary')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update(['orderStatus' => 'Pending']);
+                            product_order_track_histories::create([
+                                'orderId' => $record->id,
+                                'status'  => 'pending',
+                                'remarks' => 'Pesanan diterima oleh admin',
+                            ]);
+                        })
+                        ->visible(function () {
+                            /** @var User|null $user */
+                            $user = Auth::user();
+                            return $user && $user->hasRole('super_admin');
+                        }),
+
+                    ActionsAction::make('Process')
+                        ->label('Proses')
+                        ->icon('heroicon-o-cog')
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(function ($record) {
+                            $record->update(['orderStatus' => 'processed']);
+                            product_order_track_histories::create([
+                                'orderId' => $record->id,
+                                'status'  => 'processed',
+                                'remarks' => 'Pesanan diproses oleh admin',
+                            ]);
+                        })
+                        ->visible(function () {
+                            /** @var User|null $user */
+                            $user = Auth::user();
+                            return $user && $user->hasRole('super_admin');
+                        }),
+
+                    ActionsAction::make('Shipped')
                         ->label('Kirim')
                         ->icon('heroicon-o-truck')
                         ->color('primary')
@@ -80,24 +132,7 @@ class OrdersTable
                             return $user && $user->hasRole('super_admin');
                         }),
 
-                    ActionsAction::make('process')
-                        ->label('Proses')
-                        ->icon('heroicon-o-cog')
-                        ->color('warning')
-                        ->requiresConfirmation()
-                        ->action(function ($record) {
-                            if ($record->orderStatus === 'cancelled') {
-                                return;
-                            }
-                            $record->update(['orderStatus' => 'processed']);
-                        })
-                        ->visible(function () {
-                            /** @var User|null $user */
-                            $user = Auth::user();
-                            return $user && $user->hasRole('super_admin');
-                        }),
-
-                    ActionsAction::make('complete')
+                    ActionsAction::make('completed')
                         ->label('Selesai')
                         ->icon('heroicon-o-check')
                         ->color('success')
@@ -105,6 +140,8 @@ class OrdersTable
                         ->action(function ($record) {
                             if ($record->orderStatus === 'cancelled') {
                                 return;
+                                
+
                             }
                             $record->update(['orderStatus' => 'completed']);
                         })
@@ -114,19 +151,7 @@ class OrdersTable
                             return $user && $user->hasRole('super_admin');
                         }),
 
-                    ActionsAction::make('confirm')
-                        ->label('Konfirmasi')
-                        ->icon('heroicon-o-check')
-                        ->color('success')
-                        ->requiresConfirmation()
-                        ->action(fn($record) => $record->update(['orderStatus' => 'paid']))
-                        ->visible(function () {
-                            /** @var User|null $user */
-                            $user = Auth::user();
-                            return $user && $user->hasRole('super_admin');
-                        }),
-
-                    ActionsAction::make('cancel')
+                    ActionsAction::make('Cancel')
                         ->label('Batalkan')
                         ->icon('heroicon-o-x-mark')
                         ->color('danger')

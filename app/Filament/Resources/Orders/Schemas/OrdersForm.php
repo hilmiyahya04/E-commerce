@@ -17,7 +17,8 @@ class OrdersForm
                     ->numeric(),
                 DatePicker::make('orderDate'),
                 TextInput::make('paymentMethod'),
-                TextInput::make('orderStatus'),
+                TextInput::make('orderStatus')
+                    ->hidden(true),
                 TextInput::make('id_pemesanan')
                     ->required(),
             ]);

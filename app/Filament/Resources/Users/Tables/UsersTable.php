@@ -7,19 +7,23 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\DeleteAction;
 
-class UsersTable
+    class UsersTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
                 TextColumn::make('roles.name')
+                    ->label('Role')
                     ->badge()
                     ->color(fn(string $state) => match ($state) {
                         'admin' => 'danger',
@@ -27,6 +31,7 @@ class UsersTable
                         default => 'gray',
                     }),
                 TextColumn::make('email_verified_at')
+                    ->label('Email Verified')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('created_at')
@@ -41,8 +46,23 @@ class UsersTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                EditAction::make(),
+            ->Actions([
+                EditAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-pencil-square')
+                    ->color('primary')
+                    ->size('sm')
+                    ->tooltip('Edit Review')
+                    ->modalHeading('Edit Review Produk')
+                    ->modalSubmitActionLabel('Simpan')
+                    ->modalWidth('lg'),
+
+                DeleteAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->size('sm')
+                    ->tooltip('Delete User'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

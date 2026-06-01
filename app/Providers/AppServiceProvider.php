@@ -3,27 +3,37 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
-
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Login;
+use App\Listeners\MigrateGuestCartOnLogin;
+use App\Models\CartItem;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
+        // Perbaikan cart count (cookie & database, bukan session)
         View::composer('*', function ($view) {
-            $cartCount = count(session('cart', []));
+            if (Auth::check()) {
+                $cartCount = CartItem::where('user_id', Auth::id())->sum('quantity');
+            } else {
+                $guestCart = json_decode(request()->cookie('guest_cart'), true) ?? [];
+                $cartCount = array_sum(array_column($guestCart, 'quantity'));
+            }
             $view->with('cartCount', $cartCount);
         });
+
+        // Register listener migrasi cart saat login
+        Event::listen(
+            Login::class,
+            MigrateGuestCartOnLogin::class,
+        );
     }
 }

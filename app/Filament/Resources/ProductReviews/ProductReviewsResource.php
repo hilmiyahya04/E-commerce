@@ -30,20 +30,25 @@ class ProductReviewsResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
+    protected static ?string $navigationLabel = 'Review Produk';
+
+    protected static ?string $modelLabel = 'Review Produk';
+
+    protected static ?string $pluralModelLabel = 'Review Produk';
 
     public static function getEloquentQuery(): Builder
     {
-        if (Auth::user()->role === 'user') {
-            return parent::getEloquentQuery()
-                ->where('userId', Auth::id());
+        $query = parent::getEloquentQuery();
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        // admin lihat semua
+        if ($user->hasRole('super_admin')) {
+            return $query;
         }
 
-        return parent::getEloquentQuery();
-    }
-
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
+        return $query->where('userId', $user->id);
     }
 
     public static function form(Schema $schema): Schema

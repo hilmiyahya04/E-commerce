@@ -18,9 +18,9 @@ class OrderItemsTable
                 TextColumn::make('order.id')
                     ->label('Order ID'),
                 TextColumn::make('product_name')
-                    ->label('Produk'),
+                    ->label('Nama Produk'),
                 TextColumn::make('price')
-                    ->money('IDR'),
+                    ->label('Harga Produk'),
                 TextColumn::make('qty')
                     ->label('qty'),
                 TextColumn::make('subtotal')

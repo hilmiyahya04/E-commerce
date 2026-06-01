@@ -16,9 +16,6 @@ class ProductOrderTrackHistoriesForm
                     ->relationship('order', 'id')
                     ->required(),
 
-                TextInput::make('status')
-                    ->required(),
-
                 TextInput::make('remarks'),
             ]);
     }

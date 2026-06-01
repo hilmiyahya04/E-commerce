@@ -15,6 +15,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use UnitEnum;
 
 class OrderItemsResource extends Resource
@@ -27,9 +29,27 @@ class OrderItemsResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
-    public static function getNavigationBadge(): ?string
+    protected static ?string $navigationLabel =  'Detail Item Pesanan';
+
+    protected static ?string $modelLabel = 'Detail Item Pesanan';
+
+    protected static ?string $pluralModelLabel = 'Detail Item Pesanan';
+
+    public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::count();
+        $query = parent::getEloquentQuery();
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        // admin lihat semua
+        if ($user->hasRole('super_admin')) {
+            return $query;
+        }
+
+        return $query->whereHas('order', function ($q) use ($user) {
+            $q->where('userId', $user->id);
+        });
     }
 
     public static function form(Schema $schema): Schema

@@ -14,6 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class ProductOrderTrackHistoriesResource extends Resource
 {
@@ -27,9 +29,28 @@ class ProductOrderTrackHistoriesResource extends Resource
 
     protected static ?int $navigationSort = 7;
 
-    public static function getNavigationBadge(): ?string
+    protected static ?string $navigationLabel = 'Riwayat Pelacakan Produk';
+
+    protected static ?string $modelLabel = 'Riwayat Pelacakan Produk';
+
+    protected static ?string $pluralModelLabel = 'Riwayat Pelacakan Produk';
+
+    public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::count();
+        $query = parent::getEloquentQuery();
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        // admin lihat semua
+        if ($user->hasRole('super_admin')) {
+            return $query;
+        }
+
+        // user biasa
+        return $query->whereHas('order', function ($q) use ($user) {
+            $q->where('userId', $user->id);
+        });
     }
 
     public static function form(Schema $schema): Schema
@@ -54,7 +75,7 @@ class ProductOrderTrackHistoriesResource extends Resource
         return [
             'index' => ListProductOrderTrackHistories::route('/'),
             'create' => CreateProductOrderTrackHistories::route('/create'),
-            'edit' => EditProductOrderTrackHistories::route('/{record}/edit'),
+            // 'edit' => EditProductOrderTrackHistories::route('/{record}/edit'),
         ];
     }
 }
