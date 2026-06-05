@@ -5,9 +5,9 @@ namespace App\Filament\Resources\OrderItems\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+use Filament\Actions\DeleteAction;
 
 class OrderItemsTable
 {
@@ -15,22 +15,48 @@ class OrderItemsTable
     {
         return $table
             ->columns([
-                TextColumn::make('order.id')
-                    ->label('Order ID'),
-                TextColumn::make('product_name')
-                    ->label('Nama Produk'),
+                TextColumn::make('order.id_pemesanan')
+                    ->label('ID Pemesanan')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('product.productName')
+                    ->label('Nama Produk')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('price')
-                    ->label('Harga Produk'),
+                    ->label('Harga')
+                    ->money('IDR', locale: 'id')
+                    ->sortable(),
+
                 TextColumn::make('qty')
-                    ->label('qty'),
+                    ->label('Qty')
+                    ->sortable(),
+
                 TextColumn::make('subtotal')
                     ->label('Subtotal')
-                    ->getStateUsing(fn($record) => $record->price * $record->quantity),
+                    ->money('IDR', locale: 'id')
+                    // SELARAS: Menghitung subtotal langsung dari price dan qty record saat ini
+                    ->state(function ($record): float|int {
+                        return ($record->price ?? 0) * ($record->qty ?? 0);
+                    }),
             ])
             ->filters([
                 //
             ])
-            ->recordActions([])
+            ->actions([
+                EditAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-pencil-square'),
+
+                DeleteAction::make()
+                    ->label('')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->size('sm')
+                    ->tooltip('Delete Item'),
+            ])
             ->toolbarActions([]);
     }
 }

@@ -35,6 +35,7 @@
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
+                        autocomplete="off"
                         class="w-full bg-transparent px-6 py-3 text-lg text-gray-700 border-none outline-none ring-0 focus:ring-0 focus:outline-none"
                     />
 

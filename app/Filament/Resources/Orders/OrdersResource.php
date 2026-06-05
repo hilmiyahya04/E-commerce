@@ -77,7 +77,7 @@ class OrdersResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ItemsRelationManager::class,
+            // ItemsRelationManager::class,
         ];
     }
     public static function getPages(): array

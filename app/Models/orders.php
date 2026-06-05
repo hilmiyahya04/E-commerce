@@ -27,4 +27,9 @@ class orders extends Model
     {
         return $this->hasMany(product_order_track_histories::class, 'order_id');
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userId');
+    }
 }

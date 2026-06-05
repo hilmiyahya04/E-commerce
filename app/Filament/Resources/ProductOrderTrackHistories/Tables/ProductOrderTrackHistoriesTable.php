@@ -18,49 +18,63 @@ class ProductOrderTrackHistoriesTable
     {
         return $table
             ->columns([
-                TextColumn::make('orderId')
-                    ->label('Order ID')
+
+                TextColumn::make('order.id_pemesanan')
+                    ->label('ID Pemesanan')
                     ->sortable()
                     ->searchable(),
 
+                TextColumn::make('order.user.name')
+                    ->label('User')
+                    ->sortable()
+                    ->searchable()
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
+
                 TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
-                    ->color(fn(string $state) => match ($state) {
-                        'pending' => 'gray',
-                        'diproses' => 'warning',
-                        'dikirim' => 'info',
-                        'completed' => 'success',
-                        default => 'secondary',
+                    ->color(fn(string $state) => match (strtolower($state)) {
+                        'pending'   => 'warning',
+                        'processed' => 'info',
+                        'shipped'   => 'primary',
+                        'delivered' => 'success',
+                        'cancelled' => 'danger',
+                        default     => 'gray',
                     }),
 
                 TextColumn::make('remarks')
                     ->label('Keterangan')
-                    ->limit(30),
+                    ->limit(50),
 
                 TextColumn::make('created_at')
                     ->label('Tanggal')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->sortable(),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
+
                 EditAction::make()
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-pencil-square')
                     ->color('primary')
                     ->size('sm')
-                    ->tooltip('Edit Review')
-                    ->modalHeading('Edit Review Produk')
+                    ->tooltip('Edit Tracking')
+                    ->modalHeading('Edit Tracking Pesanan')
                     ->modalSubmitActionLabel('Simpan')
                     ->modalWidth('lg'),
 
                 DeleteAction::make()
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-trash')
                     ->color('danger')
                     ->size('sm')
-                    ->tooltip('Delete User'),
+                    ->tooltip('Hapus'),
 
                 ActionGroup::make([
 
@@ -68,68 +82,49 @@ class ProductOrderTrackHistoriesTable
                         ->label('Pending')
                         ->icon('heroicon-o-clock')
                         ->color('warning')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'pending',
-                            ]);
-                        }),
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'pending'])),
 
                     Action::make('processed')
                         ->label('Processed')
                         ->icon('heroicon-o-arrow-path')
-                        ->color('primary')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'processed',
-                            ]);
-                        }),
+                        ->color('info')
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'processed'])),
 
-                    Action::make('Shipped')
+                    Action::make('shipped')
                         ->label('Shipped')
                         ->icon('heroicon-o-truck')
-                        ->color('info')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'shipped',
-                            ]);
-                        }),
+                        ->color('primary')
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'shipped'])),
 
-                    Action::make('Delivered')
+                    Action::make('delivered')
                         ->label('Delivered')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'delivered',
-                            ]);
-                        }),
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'delivered'])),
 
-                    Action::make('Cancelled')
+                    Action::make('cancelled')
                         ->label('Cancelled')
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'cancelled',
-                            ]);
-                        }),
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'cancelled'])),
 
                 ])
                     ->label('Aksi')
                     ->icon('heroicon-o-ellipsis-horizontal-circle')
                     ->color('primary')
                     ->size('sm')
-                    ->hidden(
-                        fn() =>
-                        ! Auth::user()?->roles
-                            ->pluck('name')
-                            ->contains('super_admin')
-                    )
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
 
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
                 ]),
             ]);
     }

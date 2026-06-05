@@ -4,16 +4,15 @@ namespace App\Filament\Resources\ReturnModels\Tables;
 
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
-
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
-
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use App\Models\Refund;
 
 class ReturnModelsTable
 {
@@ -23,70 +22,73 @@ class ReturnModelsTable
             ->recordUrl(null)
             ->columns([
 
-                TextColumn::make('orderItem.product_name')
-                    ->label('Order Item'),
-
                 TextColumn::make('user.name')
                     ->label('User')
-                    ->hidden(
-                        fn() =>
-                        !Auth::user()?->roles
-                            ->pluck('name')
-                            ->contains('super_admin')
-                    ),
+                    ->sortable()
+                    ->searchable()
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
+
+                TextColumn::make('orderItem.product_name')
+                    ->label('Nama Produk')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('reason')
-                    ->limit(30),
+                    ->label('Alasan')
+                    ->limit(50),
 
                 ImageColumn::make('image')
-                    ->label('Bukti'),
+                    ->label('Bukti Foto')
+                    ->circular(),
 
                 TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
-                    ->colors([
-                        'warning' => 'pending',
-                        'primary' => 'approved',
-                        'success' => 'completed',
-                        'danger' => 'rejected',
-                    ]),
+                    ->color(fn(string $state) => match (strtolower($state)) {
+                        'pending'   => 'warning',
+                        'approved'  => 'primary',
+                        'processed' => 'info',
+                        'completed' => 'success',
+                        'rejected'  => 'danger',
+                        'failed'    => 'danger',
+                        default     => 'gray',
+                    }),
 
                 TextColumn::make('admin_note')
-                    ->label('Catatan Admin'),
+                    ->label('Catatan Admin')
+                    ->limit(50),
+
+                TextColumn::make('created_at')
+                    ->label('Tanggal')
+                    ->date()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
             ])
-
             ->headerActions([])
-
             ->filters([
                 //
             ])
-
             ->actions([
 
                 EditAction::make()
-
-                    ->hidden(
-                        fn() =>
-                        ! Auth::user()?->roles
-                            ->pluck('name')
-                            ->contains('super_admin')
-                    )
-
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-pencil-square')
                     ->color('primary')
                     ->size('sm')
-                    ->tooltip('Edit Review')
-                    ->modalHeading('Edit Review Produk')
+                    ->tooltip('Edit Return')
+                    ->modalHeading('Edit Return')
                     ->modalSubmitActionLabel('Simpan')
                     ->modalWidth('lg'),
 
                 DeleteAction::make()
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-trash')
                     ->color('danger')
                     ->size('sm')
-                    ->tooltip('Delete User'),
+                    ->tooltip('Hapus Return'),
 
                 ActionGroup::make([
 
@@ -94,62 +96,63 @@ class ReturnModelsTable
                         ->label('Pending')
                         ->icon('heroicon-o-clock')
                         ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'pending'])),
+
+                    Action::make('approved')
+                        ->label('Approved')
+                        ->icon('heroicon-o-hand-thumb-up')
+                        ->color('primary')
+                        ->requiresConfirmation()
                         ->action(function ($record) {
-                            $record->update([
-                                'status' => 'pending',
+                        $record->update(['status' => 'approved']);
+
+                        $refundExists = Refund::where('return_id', $record->id)->exists();
+
+                        if (!$refundExists) {
+                            Refund::create([
+                                'order_id'  => $record->orderItem->order_id,
+                                'return_id' => $record->id,
+                                'amount'    => $record->orderItem->price * $record->orderItem->qty,
+                                'status'    => 'pending',
                             ]);
-                        }),
+                        }
+                    }),
 
                     Action::make('processed')
                         ->label('Processed')
                         ->icon('heroicon-o-arrow-path')
-                        ->color('primary')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'processed',
-                            ]);
-                        }),
+                        ->color('info')
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'processed'])),
 
                     Action::make('completed')
                         ->label('Completed')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'completed',
-                            ]);
-                        }),
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'completed'])),
 
-                    Action::make('failed')
-                        ->label('Failed')
+                    Action::make('rejected')
+                        ->label('Rejected')
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
-                        ->action(function ($record) {
-                            $record->update([
-                                'status' => 'failed',
-                            ]);
-                        }),
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'rejected'])),
 
                 ])
                     ->label('Aksi')
                     ->icon('heroicon-o-ellipsis-horizontal-circle')
                     ->color('primary')
                     ->size('sm')
-                    ->hidden(
-                        fn() =>
-                        ! Auth::user()?->roles
-                            ->pluck('name')
-                            ->contains('super_admin')
-                    )
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
 
             ])
-
             ->bulkActions([
-
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
                 ]),
-
             ]);
     }
 }

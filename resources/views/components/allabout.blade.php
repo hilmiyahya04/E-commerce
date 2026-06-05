@@ -22,6 +22,7 @@
             type="text"
             name="search"
             value="{{ request('search') }}"
+            autocomplete="off"
             class="w-full bg-transparent px-6 py-3 text-lg text-gray-700 border-none outline-none focus:outline-none focus:ring-0 focus:shadow-none"
         />
 

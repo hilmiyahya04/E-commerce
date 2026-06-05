@@ -46,7 +46,7 @@ class ReturnModelResource extends Resource
         }
 
         // user biasa
-        return $query->where('id', $user->id);
+       return $query->where('user_id', $user->id);
     }
 
     public static function mutateFormDataBeforeCreate(array $data): array

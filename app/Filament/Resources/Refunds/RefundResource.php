@@ -8,7 +8,7 @@ use App\Filament\Resources\Refunds\Pages\ListRefunds;
 use App\Filament\Resources\Refunds\Schemas\RefundForm;
 use App\Filament\Resources\Refunds\Tables\RefundsTable;
 use App\Models\Refund;
-use BackedEnum;
+use BackedEnum; 
 use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -46,7 +46,9 @@ class RefundResource extends Resource
         }
 
         // user biasa
-        return $query->where('id', $user->id);
+        return $query->whereHas('order', function ($q) use ($user) {
+                $q->where('userId', $user->id);
+        });
     }
 
     public static function form(Schema $schema): Schema

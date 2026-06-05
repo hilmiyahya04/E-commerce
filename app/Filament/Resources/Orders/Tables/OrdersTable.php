@@ -21,10 +21,15 @@ class OrdersTable
     {
         return $table
             ->columns([
-                TextColumn::make('userId')
-                    ->label('ID Pengguna')
-                    ->numeric()
-                    ->sortable(),
+
+                TextColumn::make('id_pemesanan')
+                    ->label('ID Pemesanan')
+                    ->searchable(),
+                TextColumn::make('user.name')
+                    ->label('User')
+                    ->sortable()
+                    ->searchable()
+                    ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
                 TextColumn::make('orderDate')
                     ->label('Tanggal Pemesanan')
                     ->date()
@@ -36,17 +41,17 @@ class OrdersTable
                     ->label('Status Pemesanan')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'paid' => 'success',
+                        'pending'   => 'warning',
+                        'paid'      => 'success',
+                        'processed' => 'info',
+                        'shipped'   => 'primary',
+                        'completed' => 'success',
                         'cancelled' => 'danger',
-                        default => 'gray',
+                        default     => 'gray',
                     })
                     ->searchable(),
-                TextColumn::make('id_pemesanan')
-                    ->label('ID Pemesanan')
-                    ->searchable(),
                 TextColumn::make('total_price')
-                    ->label('Total Harga')
+                    ->label('Total')
                     ->money('IDR')
                     ->sortable(),
                 TextColumn::make('created_at')
@@ -65,7 +70,6 @@ class OrdersTable
                 EditAction::make()
                     ->label('')
                     ->icon('heroicon-o-pencil-square'),
-
 
                 DeleteAction::make()
                     ->label('')
