@@ -13,25 +13,22 @@ class OrderItemsForm
         return $schema->schema([
 
             Select::make('order_id')
-                ->relationship('order', 'id')
+                ->label('ID Pemesanan')
+                ->relationship('order', 'id_pemesanan')
+                ->searchable()
                 ->required(),
 
             Select::make('product_id')
-                ->relationship('product', 'product_name')
-                ->required(),
-
-            TextInput::make('product_name')
+                ->label('Nama Produk')
+                ->relationship('product', 'productName')
+                ->searchable()
                 ->required(),
 
             TextInput::make('price')
                 ->numeric()
                 ->required(),
 
-            TextInput::make('quantity')
-                ->numeric()
-                ->required(),
-
-            TextInput::make('subtotal')
+            TextInput::make('qty')
                 ->numeric()
                 ->required(),
         ]);
