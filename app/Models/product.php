@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class product extends Model
+class Product extends Model
 {
     use HasFactory;
     protected $table = 'product';
