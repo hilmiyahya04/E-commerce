@@ -25,13 +25,18 @@ class RefundResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 8;
 
     protected static ?string $navigationLabel = 'Refund';
 
     protected static ?string $modelLabel = 'Refund';
 
     protected static ?string $pluralModelLabel = 'Refund';
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function getEloquentQuery(): Builder
     {

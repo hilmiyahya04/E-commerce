@@ -25,13 +25,18 @@ class ReturnModelResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $navigationLabel = 'Return';
 
     protected static ?string $modelLabel = 'Return';
 
     protected static ?string $pluralModelLabel = 'Return';
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function getEloquentQuery(): Builder
     {

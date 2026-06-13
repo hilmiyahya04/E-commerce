@@ -11,6 +11,7 @@ class RecommendationService
     private $matrix = [];
     private $similarities = [];
     private $products;
+    private const SIMILARITY_THRESHOLD = -1;
 
     public function __construct()
     {
@@ -23,7 +24,7 @@ class RecommendationService
     {
         $matrix = [];
 
-        $orders = orders::where('orderStatus', 'Completed')
+        $orders = orders::where('orderStatus', 'completed')
             ->with('items.product')
             ->get();
 
@@ -47,32 +48,57 @@ class RecommendationService
             }
         }
 
-        $reviews = product_reviews::all();
-        foreach ($reviews as $review) {
-            $matrix[$review->userId][$review->productCode] = $review->rating;
-        }
+        // $reviews = product_reviews::all();
+        // foreach ($reviews as $review) {
+        //     $matrix[$review->userId][$review->productCode] = $review->rating;
+        // }
 
         return $matrix;
     }
 
+    private function getUserAverageRating($userId)
+    {
+        if (!isset($this->matrix[$userId])) {
+            return 0;
+        }
+
+        return array_sum($this->matrix[$userId]) / count($this->matrix[$userId]);
+    }
+
     private function cosineSimilarity($ratingsA, $ratingsB)
     {
-        $commonProducts = array_intersect_key($ratingsA, $ratingsB);
-        if (empty($commonProducts)) return 0;
+        $commonUsers = array_intersect(
+            array_keys($ratingsA),
+            array_keys($ratingsB)
+        );
 
-        $dotProduct = 0;
-        $magnitudeA = 0;
-        $magnitudeB = 0;
-
-        foreach ($commonProducts as $code => $rating) {
-            $dotProduct += $ratingsA[$code] * $ratingsB[$code];
+        if (count($commonUsers) < 2) {
+            return 0;
         }
-        foreach ($ratingsA as $r) $magnitudeA += $r * $r;
-        foreach ($ratingsB as $r) $magnitudeB += $r * $r;
 
-        $magnitude = sqrt($magnitudeA) * sqrt($magnitudeB);
-        return $magnitude > 0 ? round($dotProduct / $magnitude, 4) : 0;
+        $numerator = 0;
+        $denominatorA = 0;
+        $denominatorB = 0;
+
+        foreach ($commonUsers as $userId) {
+
+        $userAvg = $this->getUserAverageRating($userId);
+
+        $adjustedA = $ratingsA[$userId] - $userAvg;
+        $adjustedB = $ratingsB[$userId] - $userAvg;
+
+        $numerator += $adjustedA * $adjustedB;
+
+        $denominatorA += pow($adjustedA, 2);
+        $denominatorB += pow($adjustedB, 2);
     }
+
+    $denominator = sqrt($denominatorA) * sqrt($denominatorB);
+
+    return $denominator > 0
+        ? round($numerator / $denominator, 4)
+        : 0;
+}
 
     private function buildSimilarityTable()
     {
@@ -104,7 +130,7 @@ class RecommendationService
         return $similarities;
     }
 
-    public function getRecommendations($userId, $topN = 3)
+    public function getRecommendations($userId, $topN = 10)
     {
         if (!isset($this->matrix[$userId])) {
             return collect();
@@ -122,8 +148,8 @@ class RecommendationService
 
             foreach ($ratedProducts as $ratedCode => $rating) {
                 $sim = $this->similarities[$productCode][$ratedCode] ?? 0;
-                if ($sim <= 0) continue;
-
+                if ($sim < self::SIMILARITY_THRESHOLD) {continue;
+}
                 $numerator += $sim * $rating;
                 $denominator += abs($sim);
             }
@@ -134,6 +160,7 @@ class RecommendationService
         }
 
         arsort($predictions);
+        
         $topCodes = array_slice(array_keys($predictions), 0, $topN);
 
         return Product::whereIn('productCode', $topCodes)->get();

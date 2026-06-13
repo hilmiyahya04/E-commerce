@@ -14,9 +14,21 @@
     <section class="animate-fade-in-smooth bg-white py-8 antialiased md:py-16 mt-5">
         <div class="max-w-screen-xl mx-auto px-4 2xl:px-0">
 
-            <h2 class="animate-fade-in-smooth text-2xl font-bold text-gray-900">
-                Keranjang
-            </h2>
+            <div class="flex items-center mt-6">
+                <h1 class="animate-fade-in-smooth text-2xl font-bold text-gray-900">
+                    Keranjang |
+                </h1>
+                <button 
+                    onclick="history.back()" 
+                    class="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-gray-700"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    Kembali
+                </button>
+            </div>
+
 
             <div class="animate-fade-in-smooth mt-6 sm:mt-8 lg:flex lg:items-start lg:justify-center gap-8 pb-16">
 

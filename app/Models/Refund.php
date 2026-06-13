@@ -25,8 +25,8 @@ class Refund extends Model
         return $this->belongsTo(orders::class);
     }
 
-    public function returnModel()
-    {
-        return $this->belongsTo(ReturnModel::class, 'return_id');
-    }
+    // public function returnModel()
+    // {
+    //     return $this->belongsTo(ReturnModel::class, 'return_id');
+    // }
 }

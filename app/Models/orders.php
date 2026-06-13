@@ -25,11 +25,28 @@ class orders extends Model
 
     public function tracking()
     {
-        return $this->hasMany(product_order_track_histories::class, 'order_id');
+        return $this->hasMany(product_order_track_histories::class, 'orderId');
     }
     
     public function user()
     {
         return $this->belongsTo(User::class, 'userId');
+    }
+
+    public function refunds()
+    {
+        return $this->hasMany(Refund::class, 'order_id');
+    }
+
+    public function returns()
+    {
+        return $this->hasManyThrough(
+            ReturnModel::class,
+            order_items::class,
+            'order_id',
+            'order_item_id',
+            'id',
+            'id'
+        );
     }
 }

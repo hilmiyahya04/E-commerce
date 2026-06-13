@@ -56,3 +56,36 @@ Route::post('/cart/decrease/{id}', [CartController::class, 'decrease'])
 
 // Rute untuk melihat isi keranjang belanja
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+Route::post('/admin/return/{id}/approve', function ($id) {
+    $return = \App\Models\ReturnModel::with('orderItem')->findOrFail($id);
+    $return->update(['status' => 'approved']);
+
+    $alreadyRefunded = \App\Models\Refund::where('return_id', $return->id)->exists();
+    if (!$alreadyRefunded) {
+        \App\Models\Refund::create([
+            'return_id'   => $return->id,
+            'order_id'    => $return->orderItem->order_id,
+            'amount'      => $return->orderItem->price,
+            'status'      => 'pending',
+            'refunded_at' => null,
+        ]);
+    }
+
+    return response()->json(['success' => true]);
+})->name('admin.return.approve')->middleware('auth');
+
+Route::post('/admin/return/{id}/reject', function ($id) {
+    $return = \App\Models\ReturnModel::findOrFail($id);
+    $return->update(['status' => 'rejected']);
+    return response()->json(['success' => true]);
+})->name('admin.return.reject')->middleware('auth');
+
+Route::post('/admin/refund/{id}/complete', function ($id) {
+    $refund = \App\Models\Refund::findOrFail($id);
+    $refund->update([
+        'status'      => 'completed',
+        'refunded_at' => now(),
+    ]);
+    return response()->json(['success' => true]);
+})->name('admin.refund.complete')->middleware('auth');

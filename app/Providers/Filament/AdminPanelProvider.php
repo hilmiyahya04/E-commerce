@@ -32,11 +32,25 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('Alfarizki')
-            ->favicon(asset('Fav-icon.jpg'))
             ->login()
+            ->databaseNotifications()
             ->registration()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '240, 240, 240',   
+                100 => '220, 220, 220',
+                200 => '180, 180, 180',
+                300 => '130, 130, 130',
+                400 => '70, 70, 70',
+                500 => '0, 0, 0',       // Warna utama tombol (Hitam Pekat)
+                600 => '30, 30, 30',     // Warna saat tombol di-hover
+                700 => '20, 20, 20',
+                800 => '15, 15, 15',
+                900 => '10, 10, 10',
+                950 => '5, 5, 5', 
+                'danger' => Color::Rose,
+                'success' => Color::Emerald,
+                'warning' => Color::Amber,
+                'info' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -48,8 +62,8 @@ class AdminPanelProvider extends PanelProvider
                 DashboardOverview::class,
                 OrderStats::class,
                 BlogPostsChart::class,
-
             ])
+            
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -3,7 +3,6 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
-use App\Models\product_reviews;
 use App\Models\orders;
 use App\Models\Product;
 use App\Models\User;
@@ -26,6 +25,9 @@ class BuildSimilarityTable extends Page
     public $recommendations = [];
     public $mae = 0;          
     public $maeDetails = []; 
+
+    // Threshold similarity minimum agar dianggap relevan
+    private const SIMILARITY_THRESHOLD = -1;
 
     public function mount()
     {
@@ -61,7 +63,7 @@ class BuildSimilarityTable extends Page
     {
         $matrix = [];
 
-        $orders = orders::where('orderStatus', 'Completed')
+        $orders = orders::where('orderStatus', 'completed')
             ->with('items.product')
             ->get();
 
@@ -85,32 +87,47 @@ class BuildSimilarityTable extends Page
             }
         }
 
-        $reviews = product_reviews::all();
-        foreach ($reviews as $review) {
-            $matrix[$review->userId][$review->productCode] = $review->rating;
-        }
-
         return $matrix;
     }
 
-    // Hitung cosine similarity
-    private function cosineSimilarity($ratingsA, $ratingsB)
+    private function getUserAverageRating($userId)
     {
-        $commonProducts = array_intersect_key($ratingsA, $ratingsB);
-        if (empty($commonProducts)) return 0;
+        return array_sum($this->matrix[$userId]) / count($this->matrix[$userId]);
+    }
+    
+    private function cosineSimilarity(array $ratingsA, array $ratingsB): float
+    {
+        $commonUsers = array_intersect(
+            array_keys($ratingsA),  
+            array_keys($ratingsB)
+        );
 
-        $dotProduct = 0;
-        $magnitudeA = 0;
-        $magnitudeB = 0;
-
-        foreach ($commonProducts as $code => $rating) {
-            $dotProduct += $ratingsA[$code] * $ratingsB[$code];
+        if (count($commonUsers) < 2) {
+            return 0;
         }
-        foreach ($ratingsA as $r) $magnitudeA += $r * $r;
-        foreach ($ratingsB as $r) $magnitudeB += $r * $r;
 
-        $magnitude = sqrt($magnitudeA) * sqrt($magnitudeB);
-        return $magnitude > 0 ? round($dotProduct / $magnitude, 4) : 0;
+        $numerator = 0;
+        $denominatorA = 0;
+        $denominatorB = 0;
+
+        foreach ($commonUsers as $userId) {
+
+            $userAvg = $this->getUserAverageRating($userId);
+
+            $adjustedA = $ratingsA[$userId] - $userAvg;
+            $adjustedB = $ratingsB[$userId] - $userAvg;
+
+            $numerator += $adjustedA * $adjustedB;
+
+            $denominatorA += pow($adjustedA, 2);
+            $denominatorB += pow($adjustedB, 2);
+        }
+
+        $denominator = sqrt($denominatorA) * sqrt($denominatorB);
+
+        return $denominator > 0
+            ? round($numerator / $denominator, 4)
+            : 0;
     }
 
     // Bangun tabel similarity antar semua produk (Item-Based CF)
@@ -151,29 +168,41 @@ class BuildSimilarityTable extends Page
         $productCodes = $this->products->pluck('productCode')->toArray();
 
         foreach ($this->matrix as $userId => $ratedProducts) {
+
             foreach ($productCodes as $productCode) {
-                if (isset($ratedProducts[$productCode])) continue;
+
+                if (isset($ratedProducts[$productCode])) {
+                    continue;
+                }
 
                 $numerator = 0;
                 $denominator = 0;
 
                 foreach ($ratedProducts as $ratedCode => $rating) {
+
                     $sim = $this->similarities[$productCode][$ratedCode] ?? 0;
-                    if ($sim <= 0) continue;
+
+                    // gunakan threshold similarity
+                    if ($sim < self::SIMILARITY_THRESHOLD) {
+                        continue;
+                    }
 
                     $numerator += $sim * $rating;
                     $denominator += abs($sim);
                 }
 
                 if ($denominator > 0) {
-                    $predictions[$userId][$productCode] = round($numerator / $denominator, 4);
+
+                    $score = $numerator / $denominator;
+
+                    // batasi hasil prediksi ke skala rating 1-5
+                    $predictions[$userId][$productCode] = round(min(5, max(1, $score)),4);
                 }
             }
         }
 
         return $predictions;
     }
-
     // Ambil rekomendasi top produk per user
     private function getRecommendations($topN = 3)
     {
@@ -206,15 +235,20 @@ class BuildSimilarityTable extends Page
 
                 foreach ($ratedProducts as $ratedCode => $rating) {
                     if ($ratedCode == $productCode) continue;
+
                     $sim = $this->similarities[$productCode][$ratedCode] ?? 0;
-                    if ($sim <= 0) continue;
+
+                    // samakan threshold dengan getPredictions agar selaras
+                    if ($sim < self::SIMILARITY_THRESHOLD) {
+                        continue;
+                    }
 
                     $numerator += $sim * $rating;
                     $denominator += abs($sim);
                 }
 
                 if ($denominator > 0) {
-                    $predicted = round($numerator / $denominator, 4);
+                    $predicted = min(5,max(1,round($numerator / $denominator, 4)));
                     $error = round(abs($actual - $predicted), 4);
                     $user = $this->users->firstWhere('id', $userId);
                     $product = $this->products->firstWhere('productCode', $productCode);

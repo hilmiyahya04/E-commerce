@@ -10,17 +10,35 @@
 
 <body class="bg-gray-50 flex flex-col min-h-screen">
 
-<!-- KONTEN UTAMA -->
 <section class="animate-fade-in-smooth flex-grow bg-white">
 
-    <!-- START SEARCH -->
-    <!-- Perbaikan: Mengubah bg-#FFFFFF menjadi bg-white (Utility Tailwind yang valid) -->
+
     <div class="animate-fade-in-smooth bg-white p-8 md:p-12 lg:px-16 lg:py-20 mt-10">
         <div class="mx-auto max-w-lg text-center">
-            <h1 class="animate-fade-in-smooth text-2xl font-bold text-black sm:text-3xl">
-                All About
-            </h1>
+            <div class="flex flex-col md:flex-row items-center justify-center md:justify-start w-full">
 
+                <h1 class="animate-fade-in-smooth text-2xl font-bold text-gray-900 md:ml-32 text-center">
+                    All About Shoes  |
+                </h1>
+
+                <button
+                    onclick="history.back()"
+                    class="flex items-center px-3 py-2 rounded-xl text-sm font-medium text-gray-700"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        class="w-4 h-4">
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    Kembali
+                </button>
+
+            </div>
             <p class="animate-fade-in-smooth hidden text-black sm:mt-4 sm:block">
                 Beli sepatu impianmu di Alfarizki! Temukan koleksi sepatu terbaru
                 dengan harga terbaik. Daftar sekarang untuk penawaran eksklusif dan

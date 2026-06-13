@@ -35,6 +35,11 @@ class OrderItemsResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Detail Item Pesanan';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

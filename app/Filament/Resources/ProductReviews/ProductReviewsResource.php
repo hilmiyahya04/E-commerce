@@ -36,6 +36,11 @@ class ProductReviewsResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Review Produk';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

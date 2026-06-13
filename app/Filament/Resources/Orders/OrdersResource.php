@@ -47,21 +47,19 @@ class OrdersResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+    $query = parent::getEloquentQuery();
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
 
-        if ($user) {
-
-            // USER biasa hanya lihat order miliknya + yang sudah diproses
-            if (!$user->hasRole('super_admin')) {
-                $query->where('userId', $user->id)
-                    ->whereIn('orderStatus', ['paid', 'processed', 'shipped', 'completed']);
-            }
+    if ($user) {
+        if (!$user->hasRole('super_admin')) {
+            $query->where('userId', $user->id)
+                ->whereIn('orderStatus', ['pending', 'paid', 'processed', 'shipped', 'completed', 'cancelled']);
         }
+    }
 
-        return $query;
+    return $query;
     }
 
     public static function form(Schema $schema): Schema
@@ -77,7 +75,7 @@ class OrdersResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // ItemsRelationManager::class,
+            ItemsRelationManager::class,
         ];
     }
     public static function getPages(): array

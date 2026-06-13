@@ -3,23 +3,23 @@
     {{-- TAB NAVIGATION --}}
     <div style="display:flex; gap:8px; margin-bottom:24px; border-bottom:2px solid #e5e7eb; padding-bottom:0;">
         <button onclick="showTab('matrix')" id="tab-matrix"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid #f59e0b; color:#f59e0b;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid #000000; color:#000000;">
             1. Matrix Rating
         </button>
         <button onclick="showTab('similarity')" id="tab-similarity"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#6b7280;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
             2. Cosine Similarity
         </button>
         <button onclick="showTab('prediksi')" id="tab-prediksi"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#6b7280;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
             3. Prediksi Rating
         </button>
         <button onclick="showTab('rekomendasi')" id="tab-rekomendasi"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#6b7280;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
             4. Rekomendasi
         </button>
         <button onclick="showTab('mae')" id="tab-mae"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#6b7280;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
             5. Evaluasi MAE
         </button>
     </div>
@@ -131,7 +131,7 @@
                                         $bgColor = 'background:#ffffff; color:#374151;';
                                     }
                                 @endphp
-                                <td style="padding:10px 16px; text-align:center; border:1px solid #e5e7eb; {{ $bgColor }}">{{ $sim }}</td>
+                                <td style="padding:10px 16px; text-align:center; border:1px solid #e5e7eb; {{ $bgColor }}">{{ number_format($sim, 4) }}</td>
                             @endforeach
                         </tr>
                     @endforeach
@@ -179,7 +179,7 @@
                                         $label = $actual . ' ✓';
                                     } elseif ($predicted !== null) {
                                         $bgColor = 'background:#eff6ff; color:#2563eb; font-weight:700;';
-                                        $label = $predicted . ' *';
+                                        $label = number_format($predicted, 2) . ' *';
                                     } else {
                                         $bgColor = 'background:#ffffff; color:#9ca3af;';
                                         $label = '-';
@@ -222,7 +222,7 @@
                                 <td style="padding:10px 16px; border:1px solid #e5e7eb; {{ $rec ? 'background:#f0fdf4;' : 'background:#ffffff;' }}">
                                     @if($rec)
                                         <span style="font-weight:600; color:#16a34a;">{{ $rec['productName'] }}</span>
-                                        <span style="font-size:0.75rem; color:#6b7280; display:block;">skor: {{ $rec['score'] }}</span>
+                                        <span style="font-size:0.75rem; color:#6b7280; display:block;">skor: {{ number_format($rec['score'], 2) }}</span>
                                     @else
                                         <span style="color:#9ca3af;">-</span>
                                     @endif
@@ -304,11 +304,9 @@
             tabs.forEach(t => {
                 document.getElementById('content-' + t).style.display = 'none';
                 document.getElementById('tab-' + t).style.borderBottomColor = 'transparent';
-                document.getElementById('tab-' + t).style.color = '#6b7280';
             });
             document.getElementById('content-' + tab).style.display = 'block';
-            document.getElementById('tab-' + tab).style.borderBottomColor = '#f59e0b';
-            document.getElementById('tab-' + tab).style.color = '#f59e0b';
+            document.getElementById('tab-' + tab).style.borderBottomColor = '#000000';
         }
     </script>
 
