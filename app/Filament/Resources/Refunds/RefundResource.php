@@ -35,7 +35,12 @@ class RefundResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return false;
+        return Auth::user()?->hasRole('super_admin') ?? false;
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->hasRole('super_admin') ?? false;
     }
 
     public static function getEloquentQuery(): Builder
