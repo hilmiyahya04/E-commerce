@@ -46,6 +46,7 @@ class ProductReviewsTable
                 //
             ])
 
+            ->actionsColumnLabel('Aksi')
             ->actions([
 
                 EditAction::make()
@@ -63,7 +64,7 @@ class ProductReviewsTable
                     ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-trash')
-                    ->color('danger')
+                    ->color('primary')
                     ->size('sm')
                     ->tooltip('Hapus Review'),
             ])

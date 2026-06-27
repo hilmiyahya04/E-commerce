@@ -21,7 +21,7 @@ class RefundResource extends Resource
 {
     protected static ?string $model = Refund::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-receipt-refund';
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 

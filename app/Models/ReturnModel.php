@@ -31,4 +31,5 @@ class ReturnModel extends Model
     {
         return $this->hasOne(Refund::class, 'return_id');
     }
+
 }

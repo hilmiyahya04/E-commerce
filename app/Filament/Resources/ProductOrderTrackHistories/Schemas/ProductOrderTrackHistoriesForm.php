@@ -15,8 +15,11 @@ class ProductOrderTrackHistoriesForm
                 Select::make('orderId')
                     ->relationship('order', 'id')
                     ->required(),
-
-                TextInput::make('remarks'),
+                Select::make('userId')
+                    ->relationship('user', 'name')
+                    ->required(),
+                TextInput::make('remarks')
+                    ->required(),
             ]);
     }
 }

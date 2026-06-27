@@ -26,8 +26,6 @@ class OrdersResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-cart';
 
-    protected static string|BackedEnum |null $activeNavigationIcon = 'heroicon-o-document-text';
-
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 
     protected static ?string $navigationLabel =  'Pesanan';

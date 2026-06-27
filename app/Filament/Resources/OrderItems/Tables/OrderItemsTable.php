@@ -45,6 +45,7 @@ class OrderItemsTable
             ->filters([
                 //
             ])
+            ->actionsColumnLabel('Aksi')
             ->actions([
                 EditAction::make()
                     ->label('')
@@ -53,7 +54,7 @@ class OrderItemsTable
                 DeleteAction::make()
                     ->label('')
                     ->icon('heroicon-o-trash')
-                    ->color('danger')
+                    ->color('primary')
                     ->size('sm')
                     ->tooltip('Delete Item'),
             ])

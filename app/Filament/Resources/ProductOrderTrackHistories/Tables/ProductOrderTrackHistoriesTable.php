@@ -39,6 +39,7 @@ class ProductOrderTrackHistoriesTable
                         'shipped'   => 'primary',
                         'delivered' => 'success',
                         'cancelled' => 'danger',
+                        'completed' => 'success',
                         default     => 'gray',
                     }),
 
@@ -55,6 +56,7 @@ class ProductOrderTrackHistoriesTable
             ->filters([
                 //
             ])
+            ->actionsColumnLabel('Aksi')
             ->actions([
 
                 EditAction::make()
@@ -72,9 +74,9 @@ class ProductOrderTrackHistoriesTable
                     ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-trash')
-                    ->color('danger')
+                    ->color('primary')
                     ->size('sm')
-                    ->tooltip('Hapus'),
+                    ->tooltip('Hapus Tracking'),
                 ])
             ->toolbarActions([
                 BulkActionGroup::make([

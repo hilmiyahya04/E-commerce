@@ -3,26 +3,26 @@
     {{-- TAB NAVIGATION --}}
     <div style="display:flex; gap:8px; margin-bottom:24px; border-bottom:2px solid #e5e7eb; padding-bottom:0;">
         <button onclick="showTab('matrix')" id="tab-matrix"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid #000000; color:#000000;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid #000000; color:#808080;">
             1. Matrix Rating
         </button>
         <button onclick="showTab('similarity')" id="tab-similarity"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#808080">
             2. Cosine Similarity
         </button>
         <button onclick="showTab('prediksi')" id="tab-prediksi"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#808080">
             3. Prediksi Rating
         </button>
         <button onclick="showTab('rekomendasi')" id="tab-rekomendasi"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#808080">
             4. Rekomendasi
         </button>
         <button onclick="showTab('mae')" id="tab-mae"
-            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#000000;">
+            style="padding:10px 20px; font-weight:600; font-size:0.9rem; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; color:#808080">
             5. Evaluasi MAE
         </button>
-    </div>
+    </div>  
 
     {{-- TAB 1: MATRIKS RATING --}}
     <div id="content-matrix">
@@ -306,7 +306,7 @@
                 document.getElementById('tab-' + t).style.borderBottomColor = 'transparent';
             });
             document.getElementById('content-' + tab).style.display = 'block';
-            document.getElementById('tab-' + tab).style.borderBottomColor = '#000000';
+            document.getElementById('tab-' + tab).style.borderBottomColor = '#808080';
         }
     </script>
 

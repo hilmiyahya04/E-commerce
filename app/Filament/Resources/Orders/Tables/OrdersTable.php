@@ -59,6 +59,7 @@ class OrdersTable
                     ->label('Total')
                     ->money('IDR')
                     ->sortable(),
+                    
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -67,10 +68,12 @@ class OrdersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //
             ])
+            ->actionsColumnLabel('Aksi')
             ->actions([
                 
             ActionsAction::make('lihat_detail')
@@ -244,12 +247,13 @@ class OrdersTable
                                         ->success()
                                         ->send();
                                 });
+                                
                         }
                     }
 
                     return $actions;
                 })
-                ->modalSubmitAction(false)          
+                ->modalSubmitAction(false)  
                 ->modalCancelActionLabel('Tutup'),
 
                 ActionsAction::make('reviews')

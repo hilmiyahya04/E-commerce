@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/cart.js',
                 'resources/js/cart-qty.js',
+                'resources/css/filament/admin/theme.css',
             ],
             refresh: true,
         }),

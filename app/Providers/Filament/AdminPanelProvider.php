@@ -31,10 +31,13 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            // ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName('Alfarizki')
             ->login()
+             ->globalSearch(false) 
             ->databaseNotifications()
             ->registration()
+            ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => '240, 240, 240',   
                 100 => '220, 220, 220',

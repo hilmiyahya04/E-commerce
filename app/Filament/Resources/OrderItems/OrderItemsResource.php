@@ -23,7 +23,7 @@ class OrderItemsResource extends Resource
 {
     protected static ?string $model = order_items::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-identification';
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 

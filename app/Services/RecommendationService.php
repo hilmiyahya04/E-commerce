@@ -11,7 +11,9 @@ class RecommendationService
     private $matrix = [];
     private $similarities = [];
     private $products;
-    private const SIMILARITY_THRESHOLD = -1;
+    
+    // 1. SINKRONISASI: Ubah threshold ke 0 agar selaras dengan Admin Filament
+    private const SIMILARITY_THRESHOLD = 0;
 
     public function __construct()
     {
@@ -48,11 +50,6 @@ class RecommendationService
             }
         }
 
-        // $reviews = product_reviews::all();
-        // foreach ($reviews as $review) {
-        //     $matrix[$review->userId][$review->productCode] = $review->rating;
-        // }
-
         return $matrix;
     }
 
@@ -81,24 +78,23 @@ class RecommendationService
         $denominatorB = 0;
 
         foreach ($commonUsers as $userId) {
+            $userAvg = $this->getUserAverageRating($userId);
 
-        $userAvg = $this->getUserAverageRating($userId);
+            $adjustedA = $ratingsA[$userId] - $userAvg;
+            $adjustedB = $ratingsB[$userId] - $userAvg;
 
-        $adjustedA = $ratingsA[$userId] - $userAvg;
-        $adjustedB = $ratingsB[$userId] - $userAvg;
+            $numerator += $adjustedA * $adjustedB;
 
-        $numerator += $adjustedA * $adjustedB;
+            $denominatorA += pow($adjustedA, 2);
+            $denominatorB += pow($adjustedB, 2);
+        }
 
-        $denominatorA += pow($adjustedA, 2);
-        $denominatorB += pow($adjustedB, 2);
+        $denominator = sqrt($denominatorA) * sqrt($denominatorB);
+
+        return $denominator > 0
+            ? round($numerator / $denominator, 4)
+            : 0;
     }
-
-    $denominator = sqrt($denominatorA) * sqrt($denominatorB);
-
-    return $denominator > 0
-        ? round($numerator / $denominator, 4)
-        : 0;
-}
 
     private function buildSimilarityTable()
     {
@@ -148,21 +144,33 @@ class RecommendationService
 
             foreach ($ratedProducts as $ratedCode => $rating) {
                 $sim = $this->similarities[$productCode][$ratedCode] ?? 0;
-                if ($sim < self::SIMILARITY_THRESHOLD) {continue;
-}
+                if ($sim < self::SIMILARITY_THRESHOLD) {
+                    continue;
+                }
                 $numerator += $sim * $rating;
                 $denominator += abs($sim);
             }
 
+            // 2. SINKRONISASI: Tambahkan logika else (Fallback ke User Average) agar nilai selaras dengan Admin
             if ($denominator > 0) {
-                $predictions[$productCode] = round($numerator / $denominator, 4);
+                $score = $numerator / $denominator;
+                $predictions[$productCode] = round(min(5, max(1, $score)), 4);
+            } else {
+                $userAvg = $this->getUserAverageRating($userId);
+                $predictions[$productCode] = round($userAvg, 4);
             }
         }
 
         arsort($predictions);
         
-        $topCodes = array_slice(array_keys($predictions), 0, $topN);
+       $topCodes = array_slice(array_keys($predictions), 0, 3);
 
-        return Product::whereIn('productCode', $topCodes)->get();
+        // Mengembalikan data produk yang sudah diurutkan berdasarkan skor tertinggi
+        return Product::whereIn('productCode', $topCodes)
+            ->get()
+            ->sortBy(function ($product) use ($topCodes) {
+                return array_search($product->productCode, $topCodes);
+            })
+            ->values();
     }
 }

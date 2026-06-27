@@ -31,9 +31,8 @@ class ProductForm
                 TextInput::make('productAvailability'),
                 DatePicker::make('postingDate'),
 
-                // 👈 2. GANTI TEXTINPUT SEBELUMNYA DENGAN KODE SELECT INI
                 Select::make('categoryId')
-                    ->relationship('category', 'categoryName') // Sesuaikan 'categoryName' dengan kolom nama di tabel categories kamu
+                    ->relationship('category', 'categoryName') 
                     ->searchable()
                     ->preload()
                     ->nullable()

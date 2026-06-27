@@ -13,6 +13,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use App\Models\Refund;
+use Filament\Actions\Action as ActionsAction;
+
 
 class ReturnModelsTable
 {
@@ -46,7 +48,7 @@ class ReturnModelsTable
                     ->badge()
                     ->color(fn(string $state) => match (strtolower($state)) {
                         'pending'   => 'warning',
-                        'approved'  => 'primary',
+                        'approved'  => 'success',   
                         'processed' => 'info',
                         'completed' => 'success',
                         'rejected'  => 'danger',
@@ -69,6 +71,7 @@ class ReturnModelsTable
             ->filters([
                 //
             ])
+            ->actionsColumnLabel('Aksi')
             ->actions([
 
                 EditAction::make()
@@ -86,7 +89,7 @@ class ReturnModelsTable
                     ->hidden(fn() => !Auth::user()?->hasRole('super_admin'))
                     ->label('')
                     ->icon('heroicon-o-trash')
-                    ->color('danger')
+                    ->color('primary')
                     ->size('sm')
                     ->tooltip('Hapus Return'),
 
@@ -95,10 +98,17 @@ class ReturnModelsTable
                     Action::make('pending')
                         ->label('Pending')
                         ->icon('heroicon-o-clock')
-                        ->color('warning')
+                        ->color('primary')
                         ->requiresConfirmation()
                         ->action(fn($record) => $record->update(['status' => 'pending'])),
 
+                    Action::make('processed')
+                        ->label('Processed')
+                        ->icon('heroicon-o-arrow-path')
+                        ->color('primary')
+                        ->requiresConfirmation()
+                        ->action(fn($record) => $record->update(['status' => 'processed'])),
+                    
                     Action::make('approved')
                         ->label('Approved')
                         ->icon('heroicon-o-hand-thumb-up')
@@ -118,35 +128,41 @@ class ReturnModelsTable
                             ]);
                         }
                     }),
-
-                    Action::make('processed')
-                        ->label('Processed')
-                        ->icon('heroicon-o-arrow-path')
-                        ->color('info')
-                        ->requiresConfirmation()
-                        ->action(fn($record) => $record->update(['status' => 'processed'])),
-
-                    Action::make('completed')
-                        ->label('Completed')
-                        ->icon('heroicon-o-check-circle')
-                        ->color('success')
-                        ->requiresConfirmation()
-                        ->action(fn($record) => $record->update(['status' => 'completed'])),
-
-                    Action::make('rejected')
-                        ->label('Rejected')
-                        ->icon('heroicon-o-x-circle')
-                        ->color('danger')
-                        ->requiresConfirmation()
-                        ->action(fn($record) => $record->update(['status' => 'rejected'])),
-
                 ])
                     ->label('Aksi')
-                    ->icon('heroicon-o-ellipsis-horizontal-circle')
+                    ->icon('heroicon-o-arrow-path')
                     ->color('primary')
                     ->size('sm')
                     ->hidden(fn() => !Auth::user()?->hasRole('super_admin')),
+                
+                        ActionGroup::make([
+                            ActionsAction::make('Selesai')
+                                ->label('Selesai')
+                                ->icon('heroicon-o-check')
+                                ->color('primary')
+                                ->modalHeading('Selesaikan Return')
+                                ->modalDescription('Apakah anda yakin ingin menyelesaikan return ini?')
+                                ->modalSubmitActionLabel('Ya, Selesai')
+                                ->modalCancelActionLabel('Batal')
+                                ->requiresConfirmation()
+                                ->visible(fn() => Auth::user()?->hasAnyRole(['admin', 'super_admin']))
+                                ->action(fn($record) => $record->update(['status' => 'completed'])),
 
+                            ActionsAction::make('Tolak')
+                                ->label('Tolak')
+                                ->icon('heroicon-o-x-mark')
+                                ->color('primary')   
+                                ->modalDescription('Apakah anda yakin ingin menolak return ini?')
+                                ->modalSubmitActionLabel('Ya, Tolak')
+                                ->modalCancelActionLabel('Batal')   
+                                ->requiresConfirmation() 
+                                ->visible(fn() => Auth::user()?->hasAnyRole(['admin', 'super_admin']))
+                                ->action(fn($record) => $record->update(['status' => 'rejected'])),
+                        ])
+                    ->label('Status')
+                    ->icon('heroicon-o-flag')
+                    ->color('primary')
+                    ->size('sm'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

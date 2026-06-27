@@ -12,7 +12,6 @@ use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +20,7 @@ class ReturnModelResource extends Resource
 {
     protected static ?string $model = ReturnModel::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-left-on-rectangle';
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 

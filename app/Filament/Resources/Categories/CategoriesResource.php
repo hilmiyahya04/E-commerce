@@ -12,14 +12,13 @@ use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class CategoriesResource extends Resource
 {
     protected static ?string $model = Categories::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     protected static UnitEnum|string|null $navigationGroup = 'Shop Management';
 

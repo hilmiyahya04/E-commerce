@@ -15,10 +15,6 @@ class ReturnModelForm
         return $schema
             ->components([
 
-                // \Filament\Forms\Components\Placeholder::make('debug_role')
-                //     ->label('Role saat ini')
-                //     ->content(fn() => Auth::user()?->roles->pluck('name')->join(', ') ?? 'tidak ada'),
-
                 // USER & ADMIN
                 Select::make('order_item_id')
                     ->label('Order Item')

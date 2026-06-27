@@ -11,11 +11,11 @@ class BuildSimilarityTable extends Page
 {
     protected string $view = 'filament.pages.BuildSimilarityTable';
 
-    protected static ?string $navigationLabel = 'Build Similarity';
+    protected static ?string $navigationLabel = 'Rekomendasi Produk';
 
-    protected static ?string $modelLabel = 'Build Similarity';
+    protected static ?string $modelLabel = 'Rekomendasi Produk';
 
-    protected static ?string $pluralModelLabel = 'Build Similarity';
+    protected static ?string $pluralModelLabel = 'Rekomendasi Produk';
 
     public $matrix = [];
     public $similarities = [];
@@ -27,7 +27,7 @@ class BuildSimilarityTable extends Page
     public $maeDetails = []; 
 
     // Threshold similarity minimum agar dianggap relevan
-    private const SIMILARITY_THRESHOLD = -1;
+    private const SIMILARITY_THRESHOLD = 0;
 
     public function mount()
     {
@@ -53,9 +53,14 @@ class BuildSimilarityTable extends Page
         return 'Collaborative Filtering';
     }
 
-    public static function getNavigationSort(): int
+    public static function getNavigationIcon(): string
     {
-        return 2;
+        return 'heroicon-o-table-cells';
+    }
+
+    public function getTitle(): string
+    {
+        return 'Rekomendasi Produk';
     }
 
     // Bangun matriks rating
@@ -168,9 +173,7 @@ class BuildSimilarityTable extends Page
         $productCodes = $this->products->pluck('productCode')->toArray();
 
         foreach ($this->matrix as $userId => $ratedProducts) {
-
             foreach ($productCodes as $productCode) {
-
                 if (isset($ratedProducts[$productCode])) {
                     continue;
                 }
@@ -179,9 +182,8 @@ class BuildSimilarityTable extends Page
                 $denominator = 0;
 
                 foreach ($ratedProducts as $ratedCode => $rating) {
-
                     $sim = $this->similarities[$productCode][$ratedCode] ?? 0;
-
+                    
                     // gunakan threshold similarity
                     if ($sim < self::SIMILARITY_THRESHOLD) {
                         continue;
@@ -192,17 +194,20 @@ class BuildSimilarityTable extends Page
                 }
 
                 if ($denominator > 0) {
-
                     $score = $numerator / $denominator;
-
                     // batasi hasil prediksi ke skala rating 1-5
-                    $predictions[$userId][$productCode] = round(min(5, max(1, $score)),4);
+                    $predictions[$userId][$productCode] = round(min(5, max(1, $score)), 4);
+                } else {
+                    // SOLUSI: Jika tidak ada kemiripan item, gunakan rata-rata rating user tersebut
+                    $userAvg = $this->getUserAverageRating($userId);
+                    $predictions[$userId][$productCode] = round($userAvg, 4);
                 }
             }
         }
 
         return $predictions;
     }
+
     // Ambil rekomendasi top produk per user
     private function getRecommendations($topN = 3)
     {
@@ -248,19 +253,23 @@ class BuildSimilarityTable extends Page
                 }
 
                 if ($denominator > 0) {
-                    $predicted = min(5,max(1,round($numerator / $denominator, 4)));
-                    $error = round(abs($actual - $predicted), 4);
-                    $user = $this->users->firstWhere('id', $userId);
-                    $product = $this->products->firstWhere('productCode', $productCode);
-
-                    $details[] = [
-                        'userName' => $user?->name ?? 'User ' . $userId,
-                        'productName' => $product?->productName ?? $productCode,
-                        'actual' => $actual,
-                        'predicted' => $predicted,
-                        'error' => $error,
-                    ];
+                    $predicted = min(5, max(1, round($numerator / $denominator, 4)));
+                } else {
+                    // SOLUSI SINKRON: Gunakan rata-rata rating user jika tidak ada korelasi item
+                    $predicted = round($this->getUserAverageRating($userId), 4);
                 }
+
+                $error = round(abs($actual - $predicted), 4);
+                $user = $this->users->firstWhere('id', $userId);
+                $product = $this->products->firstWhere('productCode', $productCode);
+
+                $details[] = [
+                    'userName' => $user?->name ?? 'User ' . $userId,
+                    'productName' => $product?->productName ?? $productCode,
+                    'actual' => $actual,
+                    'predicted' => $predicted,
+                    'error' => $error,
+                ];
             }
         }
 

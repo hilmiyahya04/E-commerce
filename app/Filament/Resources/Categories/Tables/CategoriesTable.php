@@ -33,23 +33,24 @@ class CategoriesTable
             ->filters([
                 //
             ])
+            ->actionsColumnLabel('Aksi')
             ->actions([
                 EditAction::make()
                     ->label('')
                     ->icon('heroicon-o-pencil-square')
                     ->color('primary')
                     ->size('sm')
-                    ->tooltip('Edit Review')
-                    ->modalHeading('Edit Review Produk')
+                    ->tooltip('Edit Kategori')
+                    ->modalHeading('Edit Kategori')
                     ->modalSubmitActionLabel('Simpan')
                     ->modalWidth('lg'),
 
                 DeleteAction::make()
                     ->label('')
                     ->icon('heroicon-o-trash')
-                    ->color('danger')
+                    ->color('primary')
                     ->size('sm')
-                    ->tooltip('Delete User'),
+                    ->tooltip('Delete Kategori'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
